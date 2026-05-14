@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "file": "skill/code-inject/SKILL.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Agent 安全风险洞察-人工"
+              "title": "SKILL"
             }
           }
         ],
@@ -185,13 +185,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "file": "skill/code-inject/SKILL.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Agent 安全风险洞察-人工 的大纲"
+              "title": "SKILL 的大纲"
             }
           }
         ],
@@ -214,7 +214,28 @@
   },
   "active": "cba5ee17a94d5d42",
   "lastOpenFiles": [
+    "skill/code-inject/references/workflow-engine-inject.md",
+    "skill/code-inject/references/jvm-features-inject.md.tmp.10508.4ffdeb8f8834",
+    "skill/code-inject/references/template-engine-inject.md.tmp.10508.df1fddf53768",
+    "skill/code-inject/SKILL.md",
+    "skill/code-inject/references/jvm-features-inject.md",
+    "skill/code-inject/references/jvm-features-inject.md.tmp.10508.759b05bcc188",
+    "skill/code-inject/references/template-engine-inject.md",
+    "skill/code-inject/references/template-engine-inject.md.tmp.10508.13ddaa9cce9d",
+    "skill/code-inject/references/expression-engine-inject.md",
+    "skill/code-inject/references/expression-engine-inject.md.tmp.10508.e4bd60fe3d43",
+    "skill/code-inject/Code-Injection Skill 创建计划 V2 (Java Only).md",
+    "skill/code-inject/SKILL.md.tmp.10508.aed38781e3b6",
+    "skill/code-inject/references",
+    "skill/未命名 1.md",
+    "skill/code-inject",
+    "skill/agent-skill-guide.md",
+    "skill/Agent Skill 写作规范与技巧.md",
+    "skill/skill-writing-specification.md",
+    "skill/未命名.md",
+    "skill/Agent Skill 写作规范与技巧.md.tmp.6468.86df4ad372b0",
     "Agent/Agent 安全风险洞察-深度研究.md",
+    "skill/Agent Skill 写作规范与技巧.md.tmp.6468.4c3e702528ef",
     "Agent/Agent 安全风险洞察-人工.md",
     "claude-code-book-main/第四部分-工程实践篇/15-构建你自己的Agent-Harness.md",
     "claude-code-book-main/第三部分-高级模式篇/12-MCP集成与外部协议.md",
@@ -229,30 +250,8 @@
     "claude-code-book-main/第一部分-基础篇/01-智能体编程的新范式.md",
     "claude-code-analysis-main/analysis/02-security-analysis.md",
     "claude-code-analysis-main/analysis/01-architecture-overview.md",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/TypeStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/PromptStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/ToolsStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/ModelStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/MethodStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/LocationStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/MemoryStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/GenerateStep.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/ConfirmStepWrapper.tsx",
-    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/DescriptionStep.tsx",
     "claude-code-analysis-main/analysis/components/07-function-level-leaf-walkthrough.md",
     "claude-code-analysis-main/analysis/components/06-function-level-platform-walkthrough.md",
-    "claude-code-analysis-main/analysis/components/05-function-level-core-walkthrough.md",
-    "claude-code-analysis-main/analysis/components/04-component-index.md",
-    "claude-code-analysis-main/analysis/components/02-core-interaction-components.md",
-    "claude-code-analysis-main/analysis/components/03-platform-components.md",
-    "claude-code-analysis-main/analysis/components/01-component-architecture-overview.md",
-    "claude-code-analysis-main/analysis/11-hidden-features-and-easter-eggs.md",
-    "claude-code-analysis-main/analysis/10-src-file-tree.md",
-    "claude-code-analysis-main/analysis/09-final-summary.md",
-    "claude-code-analysis-main/analysis/08-reference-comparison-sources.md",
-    "claude-code-analysis-main/analysis/07-code-evidence-index.md",
-    "claude-code-analysis-main/analysis/08-competitive-comparison.md",
-    "claude-code-analysis-main/analysis/06b-negative-keyword-analysis.md",
     "claude-code-book-main/en/assets/fundamentals/six_engineering_challenges.png",
     "claude-code-book-main/en/assets/fundamentals/llm_human_interaction.png",
     "claude-code-book-main/en/assets/fundamentals/claude_code_architecture_overview.png",
