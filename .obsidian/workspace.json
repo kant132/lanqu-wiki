@@ -1,0 +1,264 @@
+{
+  "main": {
+    "id": "e81a3656b805ec27",
+    "type": "split",
+    "children": [
+      {
+        "id": "e93d2a19d8ae7bde",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "eed8af3f9457f9ca",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Agent 安全风险洞察-人工"
+            }
+          },
+          {
+            "id": "8bfcfe769a6fb049",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "claude-code-book-main/第三部分-高级模式篇/12-MCP集成与外部协议.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "12-MCP集成与外部协议"
+            }
+          },
+          {
+            "id": "cba5ee17a94d5d42",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Agent 安全风险洞察-人工"
+            }
+          }
+        ],
+        "currentTab": 2
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "38903e4e0fdcfefd",
+    "type": "split",
+    "children": [
+      {
+        "id": "49c4ebe85a7a20fd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "77afbf8df558fd4d",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "61aa4ad64f7a7606",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "3f5cc6a4a44da698",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "5aeea989c532ad11",
+    "type": "split",
+    "children": [
+      {
+        "id": "70e3f5f2e9135f8a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5d28226cd7aad45a",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Agent 安全风险洞察-人工 的反向链接列表"
+            }
+          },
+          {
+            "id": "2677924118f21940",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Agent 安全风险洞察-人工 的出链列表"
+            }
+          },
+          {
+            "id": "4f17c2a77a556661",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "032571b57c483826",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "02daa0006d4293be",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Agent/Agent 安全风险洞察-人工.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Agent 安全风险洞察-人工 的大纲"
+            }
+          }
+        ],
+        "currentTab": 4
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "cba5ee17a94d5d42",
+  "lastOpenFiles": [
+    "Agent/Agent 安全风险洞察-深度研究.md",
+    "Agent/Agent 安全风险洞察-人工.md",
+    "claude-code-book-main/第四部分-工程实践篇/15-构建你自己的Agent-Harness.md",
+    "claude-code-book-main/第三部分-高级模式篇/12-MCP集成与外部协议.md",
+    "claude-code-book-main/第四部分-工程实践篇/14-Plan模式与结构化工作流.md",
+    "claude-code-book-main/第四部分-工程实践篇/13-流式架构与性能优化.md",
+    "claude-code-book-main/第一部分-基础篇/02-对话循环-Agent的心跳.md",
+    "Pasted image 20260513201609.png",
+    "claude-code-book-main/第一部分-基础篇/04-权限管线-Agent的护栏.md",
+    "Pasted image 20260513200206.png",
+    "Pasted image 20260513200126.png",
+    "Agent/Agent 安全风险洞察.md",
+    "claude-code-book-main/第一部分-基础篇/01-智能体编程的新范式.md",
+    "claude-code-analysis-main/analysis/02-security-analysis.md",
+    "claude-code-analysis-main/analysis/01-architecture-overview.md",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/TypeStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/PromptStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/ToolsStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/ModelStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/MethodStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/LocationStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/MemoryStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/GenerateStep.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/ConfirmStepWrapper.tsx",
+    "claude-code-analysis-main/src/components/agents/new-agent-creation/wizard-steps/DescriptionStep.tsx",
+    "claude-code-analysis-main/analysis/components/07-function-level-leaf-walkthrough.md",
+    "claude-code-analysis-main/analysis/components/06-function-level-platform-walkthrough.md",
+    "claude-code-analysis-main/analysis/components/05-function-level-core-walkthrough.md",
+    "claude-code-analysis-main/analysis/components/04-component-index.md",
+    "claude-code-analysis-main/analysis/components/02-core-interaction-components.md",
+    "claude-code-analysis-main/analysis/components/03-platform-components.md",
+    "claude-code-analysis-main/analysis/components/01-component-architecture-overview.md",
+    "claude-code-analysis-main/analysis/11-hidden-features-and-easter-eggs.md",
+    "claude-code-analysis-main/analysis/10-src-file-tree.md",
+    "claude-code-analysis-main/analysis/09-final-summary.md",
+    "claude-code-analysis-main/analysis/08-reference-comparison-sources.md",
+    "claude-code-analysis-main/analysis/07-code-evidence-index.md",
+    "claude-code-analysis-main/analysis/08-competitive-comparison.md",
+    "claude-code-analysis-main/analysis/06b-negative-keyword-analysis.md",
+    "claude-code-book-main/en/assets/fundamentals/six_engineering_challenges.png",
+    "claude-code-book-main/en/assets/fundamentals/llm_human_interaction.png",
+    "claude-code-book-main/en/assets/fundamentals/claude_code_architecture_overview.png",
+    "claude-code-book-main/en/assets/fundamentals/ai_programming_tools_evolution_timeline.png",
+    "claude-code-book-main/en/assets/render_evolution_graph.png",
+    "claude-code-book-main/en/assets/book_structure_overview.png",
+    "claude-code-book-main/cover.png"
+  ]
+}
