@@ -1,246 +1,216 @@
 # 最终报告输出模板
 
-## [FINAL_SUMMARY_REPORT]
+所有阶段报告及最终报告必须输出到 `output/` 目录，格式统一为 Markdown。
+
+## 边界规则
+
+- **最终报告**（output/final-audit-report.md）：只含统计数字、断言汇总表、漏洞清单（一行一条）、修复建议、资产守恒验证
+- **阶段报告**（output/phase*.md）：含详细正向链路、PoC、代码证据、业务影响
+- **禁止重复**：最终报告不得包含正向链路细节、PoC、代码证据 — 这些在 phase4-api-audit.md 中
+- **禁止解释**：资产守恒验证只输出 PASS/FAIL + 缺失数，不得附加解释性文字
+
+## 最终报告结构
 
 ```markdown
-[FINAL_SUMMARY_REPORT]
+# Java 正向安全审计报告
 
-# 0. 执行摘要 (Executive Summary)
-executive_summary:
-  overall_risk_level: "CRITICAL / HIGH / MEDIUM / LOW"
-  total_vulnerabilities: INT
-  critical_count: INT
-  high_count: INT
-  top_3_fix_priorities:
-    - vuln_id: "SEC-CHAIN-XXX"
-      title: "漏洞标题"
-      reason: "为什么必须优先修复"
-  one_line_verdict: "一句话总结审计结论，面向管理层"
+## 0. 执行摘要
 
-# 1. 审计元数据 (Audit Metadata)
-meta:
-  scan_time: "2026-05-27T11:00:00Z"
-  engine_version: "SAST-Engine-V5.2-LSP"
-  target_project_hash: "SHA256_HASH_OF_PROJECT"
-  verdict: "FAILED_GATE" # [PASSED_GATE / FAILED_GATE] 存在重危缺陷则为 FAILED
+| 项目 | 内容 |
+|------|------|
+| 项目路径 | {path} |
+| 技术栈 | {framework} {version} |
+| 审计时间 | {timestamp} |
+| 整体风险等级 | CRITICAL / HIGH / MEDIUM / LOW |
+| 漏洞总数 | {total} |
 
-# 2. 态势统计面板 (Security Metric Dashboard)
-metrics:
-  total_assets_discovered: INT     # Phase 1 发现的资产总数
-  total_assets_audited: INT        # Phase 2/3 实际完成审计的资产数
-  asset_conservation_valid: true    # total_assets_discovered >= total_assets_audited 且缺失资产已记录
-  rest_endpoints_mapped: INT       # Phase 5 盘点出的后端路由端点数
-  parameter_taint_chains_traced: INT # Phase 4 执行 LSP 追踪的污点链总数
-  backtrack_count: INT             # 实际回溯次数（max 5）
-  lateral_expand_count: INT        # 实际横向扩展次数（max 3）
-  vulnerability_counts:
-    critical: INT                  # 成功闭环的穿透性漏洞
-    high: INT                      # 中间件单纯绕过/信任链污染
-    medium: INT                    # 配置层高风险缺陷/白名单过宽
-    low: INT                       # 编码规范/大小写敏感隐患
+## 1. 审计元数据
 
-# 3. 闭环威胁链路矩阵 (Closed Vulnerability Chains)
-vulnerability_chains:
-  - vuln_id: "SEC-CHAIN-001"
-    title: "越权穿透与后端路由参数注入复合高危漏洞"
-    severity: "CRITICAL"
-    vector:
-      step_1_bypass:
-        component_id: "F001"
-        type: "Filter_Path_Bypass"
-        sink_triggered: ".endsWith()"
-        payload_example: "/api/v2/privilege/dump;.js"
-      step_2_pollution:
-        context_type: "HttpServletRequest_Attribute"
-        key: "X-Gate-Pass"
-        polluted_by: "GatewaySecurityFilter"
-        trusted_by: "RoutingAuthInterceptor"
-      step_3_routing:
-        engine: "Spring MVC / JAX-RS / Native Servlet"
-        controller_class: "com.target.action.AdminController"
-        matched_path: "/api/v2/privilege/dump"
-      step_4_taint_sink:
-        parameter_name: "fileId"
-        binding_annotation: "@PathVariable"
-        lsp_resolved_sink: "java.io.FileInputStream.<init>"
-        taint_status: "UNSANITIZED"
-    remediation:
-      priority: "P0"                # P0=立即修复 P1=本迭代修复 P2=下迭代修复
-      immediate_action: "在 Filter 中引入路径规范化算子并采用全锚定正则匹配，清除分号矩阵变量"
-      defense_in_depth: "在核心 Controller 方法上强制追加局部鉴权注解（如 @PreAuthorize）进行二线纵深防御"
-      code_diff_example: |
-        # Filter.java:45
-        - String requestUri = request.getRequestURI();
-        + String requestUri = request.getRequestURI();
-        + requestUri = decodeAndNormalize(requestUri);
-        + if (isStaticResource(requestUri)) {
-             chain.doFilter(request, response);
-             return;
-        + }
-      architectural_fix: "强制所有 @Controller 继承 BaseSecuredController，在基类 preHandle 中实现二次鉴权"
+| 项目 | 内容 |
+|------|------|
+| 构建文件 | pom.xml / build.gradle |
+| 路由引擎 | {engines} |
+| 审计范围 | 框架分析 + API分析 |
 
-# 4. 纵深防御缺失评估 (Defense-in-Depth Deficit)
-defense_deficit_analysis:
-  naked_endpoints_count: INT       # 没有任何方法级权限注解兜底的核心公开端点数
-  framework_mismatch_risks:
-    - risk_type: "Trailing Slash / Matrix Parameter Resolution Discrepancy"
-      description: "中间件与路由层存在分号截断或斜杠容错差异"
+## 2. 框架分析结果（Part 1）
 
-# 5. 自动化契约审计闭环断言 (Verification Guardrail)
-guardrail_assertions:
-  asset_count_conserved: true       # Phase1总量 >= Phase2+3审计总量，缺失资产已记录
-  lsp_no_blackbox_guessing: true    # 自定义鉴权方法已 100% 符号展开
-  hybrid_route_aligned: true        # 已根据实际组件动态提取路由
-  param_taint_trace_closed: true    # 所有暴露端点入参均完成到 Sink 的流向断言
-  backtrack_limit_respected: true   # backtrack_count <= 5
-  lateral_expand_limit_respected: true # lateral_expand_count <= 3
+### 2.1 资产统计
+
+| 类型 | 数量 |
+|------|------|
+| 路由引擎 | {engines_count} |
+| 自定义 Filter | {filters_count} |
+| SecurityFilterChain | {security_configs_count} |
+| Interceptor | {interceptors_count} |
+
+### 2.2 Filter/SecurityFilterChain 审计
+
+| 断言 | 目标 | 状态 | 证据 |
+|------|------|------|------|
+| P1 | {target} | PASS/FAIL | {file:line} |
+
+### 2.3 Interceptor 审计
+
+| 断言 | 目标 | 状态 | 证据 |
+|------|------|------|------|
+| I1 | {target} | PASS/FAIL | {file:line} |
+
+## 3. API 分析结果（Part 2）
+
+### 3.1 路由统计
+
+| 指标 | 数量 |
+|------|------|
+| 总端点数 | {total_endpoints} |
+| CRITICAL 端点 | {critical_count} |
+| HIGH 端点 | {high_count} |
+| MEDIUM 端点 | {medium_count} |
+
+### 3.2 漏洞清单（一行一条，不含详情）
+
+| # | 类型 | 严重度 | 端点 | 位置 |
+|---|------|--------|------|------|
+| 1 | SQL注入 | CRITICAL | POST /api/users | SqlInjectionLesson8.java:49 |
+
+> 详细正向链路、PoC、业务影响见 output/phase4-api-audit.md
+
+## 4. 修复建议
+
+1. ...
+2. ...
+
+## 5. 资产守恒验证
+
+| 项目 | 数量 |
+|------|------|
+| Phase 1 发现资产总数 | {total} |
+| Phase 2/3 审计资产数 | {audited} |
+| 缺失资产 | {missing} |
+| 守恒验证 | PASS / FAIL |
 ```
 
-## 字段说明
+## 中间输出文件规范
 
-### executive_summary
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `overall_risk_level` | String | 整体风险等级：CRITICAL/HIGH/MEDIUM/LOW |
-| `total_vulnerabilities` | INT | 漏洞总数 |
-| `critical_count` | INT | CRITICAL 级别漏洞数 |
-| `high_count` | INT | HIGH 级别漏洞数 |
-| `top_3_fix_priorities` | Array | 最优先修复的 Top 3 漏洞 |
-| `one_line_verdict` | String | 面向管理层的一句话结论 |
-
-### meta
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `scan_time` | TIMESTAMP | 扫描时间 |
-| `engine_version` | String | 引擎版本 |
-| `target_project_hash` | String | 项目哈希值 |
-| `verdict` | String | PASSED_GATE / FAILED_GATE |
-
-### metrics
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `total_assets_discovered` | INT | 发现的资产总数 |
-| `total_assets_audited` | INT | 完成审计的资产数 |
-| `rest_endpoints_mapped` | INT | 路由端点总数 |
-| `parameter_taint_chains_traced` | INT | LSP追踪链总数 |
-| `vulnerability_counts` | Object | 漏洞统计 |
-
-### vulnerability_chains
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `vuln_id` | String | 漏洞ID |
-| `title` | String | 漏洞标题 |
-| `severity` | String | CRITICAL/HIGH/MEDIUM/LOW |
-| `vector` | Object | 攻击向量详情 |
-| `remediation` | Object | 修复建议 |
-| `remediation.priority` | String | 修复优先级：P0=立即修复 / P1=本迭代 / P2=下迭代 |
-
-### guardrail_assertions
-
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `asset_count_conserved` | Boolean | 资产总量守恒（P1 ≥ P2+3，缺失资产已记录） |
-| `lsp_no_blackbox_guessing` | Boolean | LSP符号展开验证 |
-| `hybrid_route_aligned` | Boolean | 路由提取验证 |
-| `param_taint_trace_closed` | Boolean | 追踪链路闭合验证 |
-
-## 示例
+### output/phase1-recon.md
 
 ```markdown
-[FINAL_SUMMARY_REPORT]
+# Phase 1: 项目初始化报告
 
-# 0. 执行摘要 (Executive Summary)
-executive_summary:
-  overall_risk_level: "CRITICAL"
-  total_vulnerabilities: 10
-  critical_count: 2
-  high_count: 3
-  top_3_fix_priorities:
-    - vuln_id: "SEC-CHAIN-001"
-      title: "越权穿透与后端路由参数注入复合高危漏洞"
-      reason: "攻击者可无认证直接读取服务器任意文件"
-    - vuln_id: "SEC-CHAIN-002"
-      title: "反序列化远程代码执行"
-      reason: "Fastjson 未禁用 autoType，可远程执行任意命令"
-    - vuln_id: "SEC-SINK-001"
-      title: "SQL 注入 - MyBatis ${} 拼接"
-      reason: "用户输入直接拼接到 SQL 语句，可拖库"
-  one_line_verdict: "项目存在 2 个 CRITICAL 级别漏洞，攻击者可无认证远程读取任意文件和执行命令，建议立即修复"
+## 项目元数据
+- 框架: {framework}
+- 版本: {version}
+- 构建工具: {build_tool}
 
-# 1. 审计元数据 (Audit Metadata)
-meta:
-  scan_time: "2026-05-28T10:30:00Z"
-  engine_version: "SAST-Engine-V5.2-LSP"
-  target_project_hash: "a3f2b1c4d5e6..."
-  verdict: "FAILED_GATE"
+## 资产台账
+### 路由引擎
+- {engine_name}
 
-# 2. 态势统计面板 (Security Metric Dashboard)
-metrics:
-  total_assets_discovered: 8
-  total_assets_audited: 8
-  asset_conservation_valid: true
-  rest_endpoints_mapped: 24
-  parameter_taint_chains_traced: 12
-  backtrack_count: 2
-  lateral_expand_count: 1
-  vulnerability_counts:
-    critical: 2
-    high: 3
-    medium: 4
-    low: 1
+### Filter
+| ID | 类名 | URL模式 | 顺序 |
+|----|------|---------|------|
+| FILTER-001 | com.example.AuthFilter | /api/* | 1 |
 
-# 3. 闭环威胁链路矩阵 (Closed Vulnerability Chains)
-vulnerability_chains:
-  - vuln_id: "SEC-CHAIN-001"
-    title: "越权穿透与后端路由参数注入复合高危漏洞"
-    severity: "CRITICAL"
-    vector:
-      step_1_bypass:
-        component_id: "F001"
-        type: "Filter_Path_Bypass"
-        sink_triggered: ".endsWith()"
-        payload_example: "/api/v2/privilege/dump;.js"
-      step_2_pollution:
-        context_type: "HttpServletRequest_Attribute"
-        key: "X-Gate-Pass"
-        polluted_by: "GatewaySecurityFilter"
-        trusted_by: "RoutingAuthInterceptor"
-      step_3_routing:
-        engine: "Spring MVC"
-        controller_class: "com.target.action.AdminController"
-        matched_path: "/api/v2/privilege/dump"
-      step_4_taint_sink:
-        parameter_name: "fileId"
-        binding_annotation: "@PathVariable"
-        lsp_resolved_sink: "java.io.FileInputStream.<init>"
-        taint_status: "UNSANITIZED"
-    remediation:
-      priority: "P0"
-      immediate_action: "在 Filter 中引入路径规范化算子并采用全锚定正则匹配"
-      defense_in_depth: "在核心 Controller 方法上强制追加局部鉴权注解"
-      code_diff_example: |
-        # Filter.java:45
-        - String requestUri = request.getRequestURI();
-        + String requestUri = decodeAndNormalize(request.getRequestURI());
-      architectural_fix: "强制所有 @Controller 继承 BaseSecuredController"
+### SecurityFilterChain
+| ID | 配置类 | CSRF | permitAll 路径 | 密码编码器 |
+|----|--------|------|---------------|-----------|
+| SEC-CONFIG-001 | WebSecurityConfig | disabled | /css/**, /actuator/** | NoOpPasswordEncoder |
 
-# 4. 纵深防御缺失评估 (Defense-in-Depth Deficit)
-defense_deficit_analysis:
-  naked_endpoints_count: 5
-  framework_mismatch_risks:
-    - risk_type: "Trailing Slash / Matrix Parameter Resolution Discrepancy"
-      description: "中间件与路由层存在分号截断或斜杠容错差异"
+### Interceptor
+| ID | 类名 | 包含模式 | 排除模式 |
+|----|------|----------|----------|
+| INTC-001 | LoginInterceptor | /** | /login, /static/** |
 
-# 5. 自动化契约审计闭环断言 (Verification Guardrail)
-guardrail_assertions:
-  asset_count_conserved: true
-  lsp_no_blackbox_guessing: true
-  hybrid_route_aligned: true
-  param_taint_trace_closed: true
-  backtrack_limit_respected: true
-  lateral_expand_limit_respected: true
+## 依赖拓扑
+### 关键依赖
+| 依赖 | 版本 | 已知CVE |
+|------|------|---------|
+| xstream | 1.4.5 | CVE-2013-7285 |
+
+## 断言评估
+| 断言 | 状态 | 说明 |
+|------|------|------|
+| C1: 构建文件存在 | PASS | pom.xml 存在 |
+| C2: 路由引擎识别 | PASS | Spring MVC |
+| C3: 资产台账非空 | PASS | {count} 个组件 |
+| C4: Filter 发现 | PASS/N/A | {count} 个 |
+| C5: Interceptor 发现 | PASS/N/A | {count} 个 |
+```
+
+### output/phase2-filter-audit.md
+
+```markdown
+# Phase 2: Filter/SecurityFilterChain 审计报告
+
+## 审计范围
+- 自定义 Filter: {count} 个
+- SecurityFilterChain: {count} 个
+- web.xml Filter: {count} 个
+
+## 断言结果
+| 断言 | 目标 | 状态 | 证据 | 详情 |
+|------|------|------|------|------|
+| P1: CSRF 配置 | SEC-CONFIG-001 | FAIL | WebSecurityConfig.java:61 | csrf.disable() |
+
+## 熔断记录
+| 类型 | 目标 | 严重度 | 影响范围 |
+|------|------|--------|----------|
+| filter_bypassed | FILTER-001 | ERROR | /api/* |
+```
+
+### output/phase3-interceptor-audit.md
+
+```markdown
+# Phase 3: Interceptor 审计报告
+
+## 审计范围
+- HandlerInterceptor: {count} 个
+- 静态资源配置: {count} 个
+
+## 断言结果
+| 断言 | 目标 | 状态 | 证据 | 详情 |
+|------|------|------|------|------|
+| I1: 鉴权检查 | INTC-001 | FAIL | UserInterceptor.java:23 | preHandle 返回 true 无检查 |
+```
+
+### output/phase4-api-audit.md
+
+```markdown
+# Phase 4: API 正向审计报告
+
+## 路由映射
+| 方法 | 路径 | Controller | 方法 | 认证 | 风险等级 |
+|------|------|------------|------|------|----------|
+| POST | /SqlInjection/attack8 | SqlInjectionLesson8 | completed | 是 | CRITICAL |
+
+## 端点审计详情
+
+### POST /SqlInjection/attack8
+
+**Controller**: SqlInjectionLesson8.java
+**认证**: 是（Spring Security）
+**过滤**: 否（无自定义 Filter 覆盖）
+**鉴权**: 否（Interceptor 无功能）
+
+**参数分析**:
+
+| 参数 | 类型 | Source 识别 | Processing 链 | Sink | 结论 |
+|------|------|------------|--------------|------|------|
+| name | @RequestParam | 用户可控 | 直接字符串拼接 | Statement.executeQuery | FAIL: SQL注入 |
+
+**正向链路**:
+```
+Source: @RequestParam name (用户可控输入)
+  → Processing: "SELECT * FROM employees WHERE last_name = '" + name + "'" (字符串拼接)
+  → Sink: statement.executeQuery(query) (SQL执行)
+  → 结论: SQL注入漏洞
+```
+
+**业务影响**: 员工数据查询接口，攻击者可获取所有员工信息
+
+**PoC**: `name=' UNION SELECT ... --`
+
+## 漏洞汇总
+| # | 类型 | 严重度 | 端点 | 正向链路 |
+|---|------|--------|------|----------|
+| 1 | SQL注入 | CRITICAL | POST /SqlInjection/attack8 | name → 拼接 → executeQuery |
 ```

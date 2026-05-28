@@ -20,13 +20,13 @@ tools:
 
 ## 门禁断言清单
 
-| 断言 | 含义 | 触发条件 |
-|------|------|----------|
-| C1 | 依赖完整性 | pom.xml 或 build.gradle 存在且可解析 |
-| C2 | 全引擎组件识别 | 扫描并精准记录所有路由引擎（Spring WebMVC, JAX-RS/Jersey, Struts2, Native Servlet, Dubbo/gRPC） |
-| C3 | 资产台账已建立 | Filters.size() + Interceptors.size() >= 0（若为 0，标记 WARN-NO-GUARD 并跳过 Phase 2/3，直接进入 Phase 4/5） |
-| C4 | 组件注册全覆盖 | 交叉检索XML配置、类注解及配置类，建立资产总表 |
-| C5 | 版本号精准感知 | 识别核心框架版本，为后续特定版本行为提供判定基准 |
+| 断言  | 含义      | 触发条件                                                                             |
+| --- | ------- | -------------------------------------------------------------------------------- |
+| C1  | 依赖完整性   | pom.xml 或 build.gradle 存在且可解析                                                    |
+| C2  | 全引擎组件识别 | 扫描并精准记录所有路由引擎（Spring WebMVC, JAX-RS/Jersey, Struts2, Native Servlet, Dubbo/gRPC） |
+| C3  | 资产台账已建立 | Filters.size() + Interceptors.size() >= 0                                        |
+| C4  | 组件注册全覆盖 | 交叉检索XML配置、类注解及配置类，建立资产总表                                                         |
+| C5  | 版本号精准感知 | 识别核心框架版本，为后续特定版本行为提供判定基准                                                         |
 
 ## 执行流程
 
