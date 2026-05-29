@@ -46,7 +46,30 @@ tools:
 
 从 Asset-Inventory 提取 interceptors 列表，若为空则返回 N/A。
 
-### Step 2: 逐 Interceptor 断言（I1-I7）
+### Step 2: 执行顺序分析
+
+```
+提取所有 Interceptor 的执行顺序：
+  - WebMvcConfigurer.addInterceptors() 中的 registry.addInterceptor() 调用顺序
+  - @Order 注解或 Ordered 接口的 order 值
+  - InterceptorRegistration.order() 显式设置
+  - Spring Security Filter 与 MVC Interceptor 的相对执行关系
+
+输出 Interceptor 执行链：
+  InterceptorChain = [Interceptor1(order=1) → Interceptor2(order=2) → ... → InterceptorN(order=N)]
+
+对每个 Interceptor 记录：
+  - 执行位置（第几个）
+  - 包含路径模式（addPathPatterns）
+  - 排除路径模式（excludePathPatterns）
+  - preHandle 返回值（true=放行 / false=拦截）
+
+注意：Spring 请求处理顺序为：
+  Filter Chain → DispatcherServlet → HandlerInterceptor.preHandle() → Controller → HandlerInterceptor.postHandle()
+  即 Filter 始终在 Interceptor 之前执行
+```
+
+### Step 3: 逐 Interceptor 断言（I1-I7）
 
 ```
 for each interceptor in inventory.interceptors:
@@ -57,7 +80,7 @@ for each interceptor in inventory.interceptors:
         record result
 ```
 
-### Step 3: 静态资源专项（S1-S4）
+### Step 4: 静态资源专项（S1-S4）
 
 ```
 enumerate all exclude patterns
@@ -67,9 +90,42 @@ for each pattern:
     test directory traversal
 ```
 
-### Step 4: 熔断标记
+### Step 5: 漏洞可达性评估
 
-若任一 Interceptor 的 I2/I3/S2 为 FAIL，生成 `interceptor_bypassed` 熔断标记。
+```
+对每个 FAIL 断言的漏洞，评估其实际可达性：
+
+1. Filter 层前置拦截分析：
+   - 检查 Phase 2 的 Filter 执行链
+   - 若 Filter 已在 Interceptor 之前拦截了相关请求，则 Interceptor 漏洞不可达
+   - 例如：Interceptor 白名单过宽，但 Filter 层已正确限制该路径
+
+2. Interceptor 链内前置分析：
+   - 检查该 Interceptor 之前的其他 Interceptor
+   - 若前置 Interceptor 的 preHandle 返回 false 拦截了相同路径，则漏洞不可达
+
+3. 路径模式交叉验证：
+   - 漏洞影响的 URL 模式是否被其他 Interceptor 的 addPathPatterns 覆盖
+   - excludePathPatterns 放行的路径是否被其他 Interceptor 捕获
+
+4. Spring Security 层补偿分析：
+   - SecurityFilterChain 的 authorizeHttpRequests 是否已限制该路径
+   - @PreAuthorize 注解是否在 Controller 层提供了额外保护
+
+可达性等级：
+  - REACHABLE: 漏洞可被实际触发，无前置拦截或后置补偿
+  - PARTIALLY_REACHABLE: 部分场景可达，存在条件限制
+  - UNREACHABLE: 被前置 Filter/Interceptor 拦截或后置补偿，实际不可触发
+
+严重度调整规则：
+  - REACHABLE: 保持原严重度
+  - PARTIALLY_REACHABLE: 严重度降一级
+  - UNREACHABLE: 严重度降为 INFO（提示级别），仅作为代码质量提示
+```
+
+### Step 6: 熔断标记
+
+若任一 Interceptor 的 I2/I3/S2 为 FAIL **且可达性为 REACHABLE 或 PARTIALLY_REACHABLE**，生成 `interceptor_bypassed` 熔断标记。
 
 ## 强制输出模板
 

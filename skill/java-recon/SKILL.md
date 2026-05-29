@@ -28,6 +28,7 @@ tools:
 | C4  | 组件注册全覆盖 | 交叉检索XML配置、类注解及配置类，建立资产总表                                                         |
 | C5  | 版本号精准感知 | 识别核心框架版本，为后续特定版本行为提供判定基准                                                         |
 | C6  | 配置文件深度分析 | 解析 application.yml/properties 等配置文件，提取安全相关配置项，标注风险等级                                    |
+| C7  | 启动时安全配置提取 | 扫描 @Configuration @Bean、@PostConstruct、ApplicationRunner 等启动时安全初始化逻辑，建立安全 Bean 资产清单        |
 
 ## 执行流程
 
@@ -144,6 +145,51 @@ tools:
 - 每个配置项记录：配置键、配置值、所在文件、行号
 - 标注安全风险等级（HIGH/MEDIUM/LOW）
 - 配置值中的敏感信息（密码、密钥）标记为 [REDACTED]
+```
+
+### Step 7: 启动时安全配置资产提取（C7）
+
+```
+扫描目标：
+- @Configuration 类中定义的安全相关 @Bean
+- @PostConstruct 方法中的安全初始化逻辑
+- ApplicationRunner / CommandLineRunner 实现类
+- ApplicationListener<ApplicationReadyEvent> / ApplicationListener<ContextRefreshedEvent>
+- @Import / @ImportResource 引入的安全配置
+- Spring Boot Auto-configuration 排除项（@SpringBootApplication.exclude）
+
+提取以下安全 Bean 资产：
+
+1. 认证相关 Bean:
+   - PasswordEncoder @Bean（类型、所在类:行号）
+   - UserDetailsService @Bean
+   - AuthenticationProvider @Bean
+   - AuthenticationManager @Bean
+
+2. Token/JWT 相关 Bean:
+   - JWT 签名/验证配置
+   - Token 生成器/验证器
+   - OAuth2 客户端配置
+
+3. 安全基础设施 Bean:
+   - CorsConfigurationSource @Bean
+   - SessionRegistry @Bean
+   - SecurityFilterChain @Bean（已在 Step 3 提取，此处交叉验证）
+
+4. 数据初始化:
+   - ApplicationRunner / CommandLineRunner 中的数据初始化
+   - @PostConstruct 中的默认用户/权限创建
+   - schema.sql / data.sql / Flyway / Liquibase 迁移脚本
+
+5. 第三方集成:
+   - RestTemplate / WebClient @Bean
+   - 消息队列连接配置
+   - 缓存管理器配置
+
+输出要求：
+- 每个 Bean 记录：Bean 名称、类型、所在类:行号、安全相关性
+- 标注 Bean 的安全影响等级（HIGH/MEDIUM/LOW）
+- 交叉验证：Bean 定义是否与 application.yml 配置一致
 ```
 
 ## 强制输出模板

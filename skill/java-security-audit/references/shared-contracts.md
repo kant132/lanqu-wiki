@@ -11,15 +11,36 @@
 | FALSE_POSITIVE | 表面风险但实际安全 | 存在补偿控制或框架层面已防护，需明确说明理由 |
 | N/A | 不适用 | 该检查项与当前组件无关 |
 
+## 漏洞可达性等级
+
+| 等级 | 含义 | 严重度调整 |
+|------|------|-----------|
+| REACHABLE | 漏洞可被实际触发，无前置拦截或后置补偿 | 保持原严重度 |
+| PARTIALLY_REACHABLE | 部分场景可达，存在条件限制（如需认证、特定角色） | 严重度降一级 |
+| UNREACHABLE | 被前置 Filter/Interceptor 拦截或后置补偿，实际不可触发 | 降为 INFO（提示级别） |
+
+## 严重度等级
+
+| 等级 | 含义 | 使用场景 |
+|------|------|----------|
+| CRITICAL | 严重 | 可直接 RCE、全量数据泄露、认证绕过 |
+| HIGH | 高危 | 敏感数据泄露、权限提升、SSRF |
+| MEDIUM | 中危 | 有限信息泄露、非敏感操作绕过 |
+| LOW | 低危 | 代码质量问题、配置不当但影响有限 |
+| INFO | 提示 | 代码质量提示、被其他防护层覆盖的潜在风险 |
+
 ## Phase 断言索引
 
 各 Phase 的断言定义详见对应子 Skill。调度Agent必须验证所有强制断言已评估:
 
 | Phase | 断言ID范围 | 子Skill |
 |-------|-----------|---------|
-| Phase 1 | C1-C6 | java-recon |
-| Phase 2 | P1-P7 | java-filter-audit |
-| Phase 3 | 详见子Skill | java-interceptor-audit |
+| Phase 1 | C1-C7 | java-recon |
+| Phase 2 第一层 | P1-P7 | java-filter-audit (Filter 类代码) |
+| Phase 2 第二层 | FC1-FC6 | java-filter-audit (Filter 注册配置) |
+| Phase 2 第三层 | SC1-SC10 | java-filter-audit (SecurityFilterChain 配置) |
+| Phase 2b | BC1-BC8 | 启动时安全配置审计 |
+| Phase 3 | I1-I7, S1-S4 | java-interceptor-audit |
 | Phase 4 | 详见子Skill | java-api-risk |
 
 ## 跨Phase数据协议
@@ -60,6 +81,29 @@
     }
   ],
   "config_sources": ["WebMvcConfig.java", "web.xml"],
+  "filter_registrations": [
+    {
+      "id": "FR-001",
+      "filter_id": "FILTER-001",
+      "registration_type": "FilterRegistrationBean",
+      "source": "WebConfig.java:45",
+      "url_patterns": ["/api/*"],
+      "order": 1,
+      "dispatcher_types": ["REQUEST", "FORWARD"],
+      "init_parameters": {},
+      "conditional": null
+    }
+  ],
+  "startup_security_beans": [
+    {
+      "id": "SB-001",
+      "bean_name": "passwordEncoder",
+      "bean_type": "PasswordEncoder",
+      "source": "WebSecurityConfig.java:87",
+      "security_relevance": "HIGH",
+      "category": "authentication"
+    }
+  ],
   "config_analysis": {
     "files": [
       {
@@ -98,15 +142,24 @@
       "target": "FILTER-001",
       "status": "FAIL",
       "evidence": "AuthFilter.java:45",
-      "detail": "使用 getRequestURI() 但未 normalize"
+      "detail": "使用 getRequestURI() 但未 normalize",
+      "original_severity": "HIGH",
+      "reachability": "UNREACHABLE",
+      "adjusted_severity": "INFO",
+      "reachability_reason": "被前置 Spring Security FilterChain 拦截，未认证请求无法到达该 Filter"
     }
   ],
+  "execution_order": {
+    "chain": ["AuthFilter(order=1)", "RateLimitFilter(order=2)", "PathValidationFilter(order=3)"],
+    "visualization": "Request → AuthFilter → RateLimitFilter → PathValidationFilter → Servlet"
+  },
   "circuit_breakers": [
     {
       "type": "filter_bypassed",
       "target": "FILTER-001",
       "severity": "ERROR",
-      "affected_paths": ["/api/*"]
+      "affected_paths": ["/api/*"],
+      "reachability": "UNREACHABLE"
     }
   ]
 }
@@ -116,8 +169,12 @@
 
 | 触发源 | 熔断标记 | 下游影响 |
 |--------|----------|----------|
-| Phase 2 FAIL | `filter_bypassed: true` | Phase 4 对应端点的全局过滤因子强制取 5 |
-| Phase 3 FAIL | `interceptor_bypassed: true` | Phase 4 对应端点的鉴权因子强制取 5 |
+| Phase 2 FAIL (REACHABLE) | `filter_bypassed: true` | Phase 4 对应端点的全局过滤因子强制取 5 |
+| Phase 2 FAIL (PARTIALLY_REACHABLE) | `filter_bypassed: true` | Phase 4 对应端点的全局过滤因子强制取 3 |
+| Phase 2 FAIL (UNREACHABLE) | `filter_bypassed: true` (INFO) | 不传播到 Phase 4，仅记录为代码质量提示 |
+| Phase 3 FAIL (REACHABLE) | `interceptor_bypassed: true` | Phase 4 对应端点的鉴权因子强制取 5 |
+| Phase 3 FAIL (PARTIALLY_REACHABLE) | `interceptor_bypassed: true` | Phase 4 对应端点的鉴权因子强制取 3 |
+| Phase 3 FAIL (UNREACHABLE) | `interceptor_bypassed: true` (INFO) | 不传播到 Phase 4，仅记录为代码质量提示 |
 | Phase 2/3 均无 FAIL | 无熔断标记 | Phase 4 自行评估各因子 |
 
 ## 快速失败错误码

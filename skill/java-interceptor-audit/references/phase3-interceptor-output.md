@@ -1,5 +1,32 @@
 # Phase 3 输出模板
 
+## INTERCEPTOR_CHAIN_ORDER
+
+```markdown
+[INTERCEPTOR_CHAIN_ORDER]
+_generated_at: "TIMESTAMP"
+
+### Interceptor 执行链顺序
+
+| 执行顺序 | Interceptor ID | 类名 | 包含路径 | 排除路径 | Order 值 |
+|----------|---------------|------|----------|----------|----------|
+| 1 | INTC-001 | AuthInterceptor | /api/** | /api/public/** | 1 |
+| 2 | INTC-002 | LocaleChangeInterceptor | /** | 无 | 2 |
+
+### 完整请求处理链
+
+```
+Request → [Filter Chain] → DispatcherServlet → Interceptor1.preHandle() → Interceptor2.preHandle() → Controller → Interceptor2.postHandle() → Interceptor1.postHandle()
+```
+
+### Filter 与 Interceptor 交叉关系
+
+| URL 模式 | Filter 覆盖 | Interceptor 覆盖 | 保护层级 |
+|----------|-------------|------------------|----------|
+| /api/** | AuthFilter(order=1) | AuthInterceptor(order=1) | 双重保护 |
+| /api/public/** | 无 | AuthInterceptor excludePathPatterns | 无保护 |
+```
+
 ## INTERCEPTOR_AUDIT
 
 ```markdown
@@ -7,10 +34,18 @@
 _audit_id: "I_XXX"
 _audit_target: "ClassName"
 _assertions_applied: ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "S1", "S2", "S3", "S4"]
+_execution_order: INT
+_reachability: "REACHABLE|PARTIALLY_REACHABLE|UNREACHABLE"
+_severity_adjusted: "CRITICAL|HIGH|MEDIUM|LOW|INFO"
 
 ### [H-IN-XXX] Interceptor 漏洞名称
 * **组件位置**: `Interceptor` | `FileName:Line`
 * **漏洞类型**: 详细分类
+* **执行顺序**: 第 N 个执行
+* **可达性评估**: REACHABLE / PARTIALLY_REACHABLE / UNREACHABLE
+* **可达性理由**: 说明为何可达/不可达
+* **原始严重度**: HIGH
+* **调整后严重度**: MEDIUM / INFO
 * **强制检查结果**:
 
 | 断言 | 检查项 | 结果 | 证据 |
@@ -26,6 +61,13 @@ _assertions_applied: ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "S1", "S2", "S3"
 | S2 | 路径走私断言 | PASS/FAIL | 代码片段 |
 | S3 | 通配符绕过 | PASS/FAIL | 代码片段 |
 | S4 | 目录穿越 | PASS/FAIL | 代码片段 |
+
+#### 前置/后置影响分析
+
+| 相关组件 | 类型 | 执行顺序 | 影响类型 | 说明 |
+|----------|------|----------|----------|------|
+| AuthFilter | Filter | 前置(Filter Chain) | 拦截 | Filter 层已限制 /api/** 路径需认证 |
+| SecurityFilterChain | Spring Security | 前置 | 补偿 | authorizeHttpRequests 已配置 /admin/** 需 ADMIN 角色 |
 ```
 
 ## 静态资源放行专项
@@ -55,14 +97,46 @@ _assertions_applied: ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "S1", "S2", "S3"
 ## 示例
 
 ```markdown
+[INTERCEPTOR_CHAIN_ORDER]
+_generated_at: "2026-05-29T10:00:00Z"
+
+### Interceptor 执行链顺序
+
+| 执行顺序 | Interceptor ID | 类名 | 包含路径 | 排除路径 | Order 值 |
+|----------|---------------|------|----------|----------|----------|
+| 1 | INTC-001 | AuthInterceptor | /api/** | /api/public/**, /health | 1 |
+| 2 | INTC-002 | LocaleChangeInterceptor | /** | 无 | 2 |
+
+### 完整请求处理链
+
+```
+Request → [Spring Security FilterChain] → DispatcherServlet → AuthInterceptor.preHandle() → LocaleChangeInterceptor.preHandle() → Controller
+```
+
+### Filter 与 Interceptor 交叉关系
+
+| URL 模式 | Filter 覆盖 | Interceptor 覆盖 | 保护层级 |
+|----------|-------------|------------------|----------|
+| /api/** | Spring Security (authenticated) | AuthInterceptor (token check) | 双重保护 |
+| /api/public/** | Spring Security (permitAll) | AuthInterceptor excludePathPatterns | 无保护（设计如此） |
+| /health | Spring Security (permitAll) | AuthInterceptor excludePathPatterns | 无保护（设计如此） |
+
 [INTERCEPTOR_AUDIT]
 _audit_id: "I_001"
 _audit_target: "AuthInterceptor"
 _assertions_applied: ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "S1", "S2", "S3", "S4"]
+_execution_order: 1
+_reachability: "UNREACHABLE"
+_severity_adjusted: "INFO"
 
 ### [H-IN-001] Interceptor 白名单过宽
 * **组件位置**: `Interceptor` | `AuthInterceptor.java:23`
 * **漏洞类型**: 白名单过宽 / 路径走私
+* **执行顺序**: 第 1 个执行
+* **可达性评估**: UNREACHABLE
+* **可达性理由**: Spring Security FilterChain 已在 Filter 层对 /api/v2/** 路径要求 ADMIN 角色认证，即使 Interceptor 白名单过宽，未授权请求已被 Spring Security 拦截
+* **原始严重度**: HIGH
+* **调整后严重度**: INFO
 * **强制检查结果**:
 
 | 断言 | 检查项 | 结果 | 证据 |
@@ -79,6 +153,13 @@ _assertions_applied: ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "S1", "S2", "S3"
 | S3 | 通配符绕过 | FAIL | //可绕过 |
 | S4 | 目录穿越 | PASS | 静态目录已限制 |
 
+#### 前置/后置影响分析
+
+| 相关组件 | 类型 | 执行顺序 | 影响类型 | 说明 |
+|----------|------|----------|----------|------|
+| Spring Security FilterChain | Filter | 前置(Filter Chain) | 完全拦截 | authorizeHttpRequests 配置 /api/v2/** 需要 ADMIN 角色，未授权请求被 403 拒绝 |
+| LocaleChangeInterceptor | Interceptor | 后置(order=2) | 无影响 | 仅处理国际化参数 |
+
 ## 静态资源放行专项
 
 ### 放行路径清单
@@ -90,8 +171,8 @@ _assertions_applied: ["I1", "I2", "I3", "I4", "I5", "I6", "I7", "S1", "S2", "S3"
 
 ### 路径走私测试矩阵
 
-| 原始路径 | 走私Payload | 测试结果 | 风险等级 |
-|----------|-------------|----------|----------|
-| `/api/v2/**` | `..;/..;/admin/privilege` | 可越权访问 | HIGH |
-| `/api/v2/**` | `/..%252f..%252fpasswd` | 可访问敏感文件 | CRITICAL |
+| 原始路径 | 走私Payload | 测试结果 | 风险等级 | 可达性 |
+|----------|-------------|----------|----------|--------|
+| `/api/v2/**` | `..;/..;/admin/privilege` | 可越权访问 | HIGH | UNREACHABLE (被Spring Security拦截) |
+| `/api/v2/**` | `/..%252f..%252fpasswd` | 可访问敏感文件 | CRITICAL | UNREACHABLE (被Spring Security拦截) |
 ```
