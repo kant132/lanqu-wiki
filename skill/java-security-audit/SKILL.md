@@ -21,13 +21,16 @@ tools:
 
 ## 工作流程
 
-### 检查点 1：项目初始化
+### 检查点 1：项目初始化与配置文件分析
 
 ```
 Task: java-recon skill
 输入: 项目根路径
-输出: output/phase1-recon.md
-验证: 资产台账非空 → 进入检查点 2；否则 ERR-EMPTY-INVENTORY 终止
+输出: output/phase1-recon.md（含资产台账 + 配置文件深度分析 Config_Analysis）
+验证: 
+  - 资产台账非空 → 进入检查点 2；否则 ERR-EMPTY-INVENTORY 终止
+  - Config_Analysis 非空 → 配置文件风险项传递到后续检查点
+  - 若存在 application.yml/properties → 必须完成配置文件分析（C6 断言）
 ```
 
 ### 检查点 2：框架层审计（Phase 2 + Phase 3）
@@ -52,10 +55,15 @@ Task: java-recon skill
 
 ```
 Task: java-api-discovery skill
-输入: output/phase1-recon.md + 项目根路径
+输入: output/phase1-recon.md（含 Config_Analysis） + 项目根路径
 输出:
-  - output/api-inventory.md（全量 API 路由清单）
-  - output/api-risk-assessment.md（三维风险评分 + 审计优先级）
+  - output/api-inventory.md（全量 API 路由清单 + 业务上下文）
+  - output/api-risk-assessment.md（三维风险评分 + 业务用途 + 参数业务语义 + 配置文件关联 + 审计优先级）
+
+验证:
+  - 每个端点必须有业务用途说明
+  - 每个参数必须有业务含义
+  - 若存在配置文件风险项，必须关联到受影响的 API
 ```
 
 ### 检查点 5：API 正向污点审计
@@ -63,11 +71,18 @@ Task: java-api-discovery skill
 ```
 Task: java-api-audit skill
 输入:
-  - output/api-risk-assessment.md（来自检查点 4）
+  - output/api-risk-assessment.md（来自检查点 4，含业务上下文 + 配置文件关联）
+  - output/phase1-recon.md（含 Config_Analysis 配置文件分析）
   - output/phase2-filter-audit.md（框架层已知风险）
   - output/phase3-interceptor-audit.md（框架层已知风险）
 输出: output/phase4-api-audit.md
-原则: 每个端点独立章节，每个漏洞包含完整正向链路 Source → Processing → Sink + PoC + 业务影响
+原则:
+  - 每个端点独立章节，必须包含业务用途说明
+  - 每个漏洞包含完整正向链路 Source → Processing → Sink（每步含文件全路径+行号）
+  - 每个参数必须分析消毒/净化情况
+  - 必须包含完整 Sink 路径（Source文件:行号 → 中间方法:行号 → Sink文件:行号）
+  - 必须关联配置文件分析结果
+  - 必须包含 PoC + 业务影响
 ```
 
 ### 检查点 6：生成最终报告
@@ -86,6 +101,11 @@ Task: java-api-audit skill
 | 从 SQL 执行语句反推用户输入 | 必须从 @RequestParam/@RequestBody 开始正向追踪 |
 | 框架层风险混入 API 章节 | 框架分析结果写入 final-audit-report.md 的"框架分析结果"章节，API 漏洞写入"API 分析结果"章节 |
 | 输出 JSON 或纯文本报告 | 所有输出必须是 Markdown 文件 |
+| 忽略 application.yml/properties 配置文件 | 必须执行 C6 断言，深度分析配置文件安全相关项 |
+| API 风险评估不写业务用途 | 每个端点必须有业务用途说明，每个参数必须有业务含义 |
+| 不分析参数消毒情况 | 每个可控参数必须分析从 Source 到 Sink 是否有消毒操作 |
+| Sink 路径不完整 | 必须输出完整 Source→Sink 路径，每步含文件全路径+行号 |
+| 不关联配置文件分析 | API 审计必须结合 Config_Analysis 分析配置对安全的影响 |
 
 ## 输出文件
 

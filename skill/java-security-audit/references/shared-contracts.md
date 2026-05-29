@@ -17,7 +17,7 @@
 
 | Phase | 断言ID范围 | 子Skill |
 |-------|-----------|---------|
-| Phase 1 | C1-C5 | java-recon |
+| Phase 1 | C1-C6 | java-recon |
 | Phase 2 | P1-P7 | java-filter-audit |
 | Phase 3 | 详见子Skill | java-interceptor-audit |
 | Phase 4 | 详见子Skill | java-api-risk |
@@ -59,7 +59,31 @@
       "exclude_patterns": ["/login", "/static/**"]
     }
   ],
-  "config_sources": ["WebMvcConfig.java", "web.xml"]
+  "config_sources": ["WebMvcConfig.java", "web.xml"],
+  "config_analysis": {
+    "files": [
+      {
+        "path": "src/main/resources/application.yml",
+        "profiles": ["default", "dev", "prod"]
+      }
+    ],
+    "security_config": [
+      {
+        "key": "security.jwt.secret",
+        "value": "[REDACTED]",
+        "file": "application.yml",
+        "line": 45,
+        "risk": "HIGH",
+        "note": "JWT 密钥硬编码"
+      }
+    ],
+    "datasource_config": [],
+    "upload_config": [],
+    "actuator_config": [],
+    "cors_config": [],
+    "serialization_config": [],
+    "custom_business_config": []
+  }
 }
 ```
 
