@@ -1,11 +1,12 @@
 ---
 name: script-security-audit
-description: "审计源代码中与外部脚本执行相关的安全漏洞。当用户要求审计代码安全、检查脚本注入、审查命令执行风险、查找 shell 注入、分析调用外部解释器（bash、perl、python、lua）的代码安全问题时，使用此 skill。当用户提到安全审计、漏洞扫描、代码审计、查找危险 sink 点（如 system()、popen()、exec()、subprocess 调用）时也应触发。即使用户只是说'审计这段代码'或'检查安全问题'，也使用此 skill。"
+version: 2.0.0
+description: 审计源代码中外部脚本的安全漏洞。当用户要求安全审计、代码审计、检查命令注入、查找 shell 注入、分析 system()/popen()/exec()/subprocess/child_process/Runtime.exec 等危险调用时触发。支持 C/C++、Python、Go、Java、NodeJS、Shell、Ruby、Scala、Rust、Lua、PHP。
 ---
 
 # 脚本安全审计
 
-审计源代码中外部脚本执行路径的安全漏洞。此 skill 专注于两个核心环节：识别应用程序调用脚本解释器（bash、sh、perl、python、lua）的 sink 点，以及审计 sink 点调用的脚本或命令本身的安全问题。
+审计源代码中外部脚本执行路径的安全漏洞。此 skill 专注于两个核心环节：识别应用程序调用脚本解释器（bash、sh、perl、python、lua、ruby、node、scala、php 等）的 sink 点，以及审计 sink 点调用的脚本或命令本身的安全问题。
 
 本 skill 不做 LSP 数据流追踪（那是其他 skill 的职责），只聚焦 sink 点调用模式及其引用的脚本/命令内容。
 
@@ -17,6 +18,13 @@ description: "审计源代码中与外部脚本执行相关的安全漏洞。当
 - **Python**: 读取 `references/sinks-python.md`
 - **Go**: 读取 `references/sinks-go.md`
 - **Java**: 读取 `references/sinks-java.md`
+- **NodeJS/Electron**: 读取 `references/sinks-nodejs.md`
+- **Shell (bash/sh/dash/zsh)**: 读取 `references/sinks-shell.md`
+- **Ruby**: 读取 `references/sinks-ruby.md`
+- **Scala**: 读取 `references/sinks-scala.md`
+- **Rust**: 读取 `references/sinks-rust.md`
+- **Lua**: 读取 `references/sinks-lua.md`
+- **PHP**: 读取 `references/sinks-php.md`
 
 ## 审计工作流
 
@@ -34,11 +42,17 @@ description: "审计源代码中与外部脚本执行相关的安全漏洞。当
 
 阶段四的脚本与命令深度安全审计应使用**子 agent 并行执行**，以提高效率：
 
-**启动子 agent 的规则：**
+**启动子 agent 的方式：**
+使用 Task 工具启动子 agent，`subagent_type` 设为 `"general"`。每个子 agent 的 prompt 必须包含：
+1. sink 点信息（文件:行号、匹配的代码行）
+2. 阶段二的分析结果（命令内容、参数来源判定、风险等级）
+3. 需要加载的参考文件路径（cmd-*.md、patterns-sanitization.md、security-checks.md）
+4. 期望的输出格式（完整分析过程 + 发现列表）
+
+**启动规则：**
 - 阶段三完成后，为每个**高风险和中风险** sink 点启动一个独立的子 agent
 - 每个子 agent 负责一个 sink 点的完整深度审计（内联命令审计 + 脚本审计 + 污点追踪）
-- 子 agent 接收的输入：sink 点信息（文件:行号、命令内容、参数来源判定、风险等级）
-- 子 agent 的输出：该 sink 点的完整分析过程和发现（格式见报告模板）
+- 同一消息中启动多个子 agent（并行），等待所有子 agent 返回结果
 
 **子 agent 的职责边界：**
 - 只审计分配给它的那一个 sink 点
@@ -53,20 +67,61 @@ description: "审计源代码中与外部脚本执行相关的安全漏洞。当
 - 阶段五汇总所有子 agent 的结果，去重/分组，生成最终报告
 - 阶段六执行反思与自检
 
+## 上下文窗口管理
+
+参考文件和源码读取会消耗大量上下文。遵循以下策略避免溢出：
+
+**加载预算：**
+- 每次最多同时保持 3 个 cmd-*.md 文件的内容在上下文中
+- 分析完一个 sink 后，该 sink 加载的 cmd-*.md 知识不再保留（子 agent 天然隔离）
+- patterns-sanitization.md 和 security-checks.md 每个子 agent 只加载一次
+
+**源码读取控制：**
+- 阶段二读取上下文时，优先使用 LSP 获取函数体（精确且短）
+- 无 LSP 时，读取 sink 前 50-80 行 + 后 20 行，不要读取整个文件
+- 如果函数超过 200 行，只读取 sink 所在的关键代码块
+
+**分批处理：**
+- 如果阶段一发现 > 30 个 sink，按目录或模块分批处理（每批 10-15 个 sink）
+- 每批完成后生成中间结果，释放上下文后再处理下一批
+
 ### 阶段一：语言识别与 Sink 发现
 
 **确定范围：**
 - 如果用户指定了语言，只加载该语言的 sink 参考文件并搜索对应模式。
-- 如果用户说"进行外部脚本安全审计"或类似表述但未指定语言，通过检查文件扩展名和构建文件检测项目中存在的语言，然后加载所有 sink 参考文件。
+- 如果用户说"进行外部脚本安全审计"或类似表述但未指定语言，应先通过检查文件扩展名和构建文件检测项目中存在的语言，然后加载对应的 sink 参考文件。
 
 **检测项目中的语言：**
-- `.c`、`.cpp`、`.h`、`.hpp` → C/C++（加载 `references/sinks-c-cpp.md`）
-- `.py`、`requirements.txt`、`setup.py`、`pyproject.toml` → Python（加载 `references/sinks-python.md`）
-- `.go`、`go.mod` → Go（加载 `references/sinks-go.md`）
-- `.java`、`pom.xml`、`build.gradle` → Java（加载 `references/sinks-java.md`）
+- `.c`、`.cpp`、`.cc`、`.cxx`、`.h`、`.hpp`、`.hh`、`CMakeLists.txt`、`Makefile` → C/C++（加载 `references/sinks-c-cpp.md`）
+- `.py`、`requirements.txt`、`setup.py`、`pyproject.toml`、`Pipfile`、`setup.cfg` → Python（加载 `references/sinks-python.md`）
+- `.go`、`go.mod`、`go.sum` → Go（加载 `references/sinks-go.md`）
+- `.java`、`pom.xml`、`build.gradle`、`build.gradle.kts`、`settings.gradle` → Java（加载 `references/sinks-java.md`）
+- `.js`、`.ts`、`.jsx`、`.tsx`、`.mjs`、`.cjs`、`package.json`、`.asar` → NodeJS/Electron（加载 `references/sinks-nodejs.md`）
+- `.sh`、`.bash`、`.dash`、`.zsh` → Shell（加载 `references/sinks-shell.md`）
+- `.rb`、`Gemfile`、`Rakefile`、`.gemspec` → Ruby（加载 `references/sinks-ruby.md`）
+- `.scala`、`.sc`、`build.sbt`、`build.sc` → Scala（加载 `references/sinks-scala.md`）
+- `.rs`、`Cargo.toml`、`Cargo.lock` → Rust（加载 `references/sinks-rust.md`）
+- `.lua`、`.rockspec` → Lua（加载 `references/sinks-lua.md`）
+- `.php`、`composer.json` → PHP（加载 `references/sinks-php.md`）
 
 **搜索 sink 点：**
 使用 grep 在整个项目（或用户指定的目录）中搜索每个参考文件中列出的 sink 函数签名。记录每个匹配项的文件路径、行号和匹配的代码。
+
+**排除规则：**
+grep 搜索时排除以下目录和文件，避免噪音：
+- 依赖目录：`node_modules/`、`vendor/`、`venv/`、`.venv/`、`site-packages/`
+- 构建产物：`build/`、`dist/`、`target/`、`out/`、`bin/`、`obj/`
+- 编译文件：`*.min.js`、`*.min.css`、`*.pyc`、`*.pyo`、`*.class`、`*.o`、`*.so`、`*.dll`、`*.exe`
+- 版本控制：`.git/`、`.svn/`
+- IDE/编辑器：`.idea/`、`.vscode/`、`.vs/`
+
+**测试代码处理：**
+测试文件中的 sink 点通常不构成生产风险，但仍需记录。识别测试文件的模式：
+- `*_test.go`、`test_*.py`、`*_test.py`、`*.spec.js`、`*.test.js`、`*.spec.ts`、`*.test.ts`
+- `tests/`、`test/`、`__tests__/`、`spec/` 目录下的文件
+- `*Test.java`、`*Tests.java`、`*Spec.scala`
+
+对测试文件中的 sink 点：标记为"测试代码"，降低优先级（不进入阶段四深度审计），仅在报告附录中记录。
 
 **识别间接 sink（自定义封装函数）：**
 人工审计师不会只看标准函数名。如果项目中有自定义的命令执行封装函数（如 `run_command()`、`execute_shell()`、`do_system()`），需要：
@@ -78,9 +133,31 @@ description: "审计源代码中与外部脚本执行相关的安全漏洞。当
 - [ ] 已检测项目中存在的所有语言（不能只检测一种就停止）
 - [ ] 已加载所有匹配语言的 sink 参考文件
 - [ ] 已用 grep 搜索每个参考文件中的**所有** sink 函数签名（不能只搜 system）
+- [ ] 已排除依赖目录、构建产物、编译文件（node_modules/build/dist 等）
 - [ ] 已检查是否存在间接 sink（自定义封装函数），如有则已递归搜索调用点
 - [ ] 已记录每个 sink 的：文件路径、行号、匹配的代码行
-- [ ] sink 列表不为空（如果为空，向用户确认搜索范围是否正确）
+- [ ] 测试文件中的 sink 已标记为"测试代码"并降低优先级
+- [ ] sink 列表不为空（如果为空，向用户确认搜索范围是否正确；确认后生成"未发现 sink 点"的简短报告并结束）
+
+**大规模项目处理策略：**
+
+当 sink 点数量较多时，按以下规则处理：
+
+| Sink 数量 | 策略 |
+|-----------|------|
+| 1-30 | 全量审计，每个 sink 都进入阶段二 |
+| 31-100 | 全量进入阶段二，但阶段四仅对高风险 sink 启动子 agent，中风险 sink 由主 agent 串行审计 |
+| 101-300 | 向用户报告数量，建议按目录/模块分批审计。如用户不指定，按风险优先级排序：先审计高风险 sink，再审计中风险，低风险仅记录 |
+| 300+ | 向用户报告数量并暂停，要求用户指定审计范围（特定目录、特定语言、或仅高风险 sink） |
+
+**用户交互时机：**
+
+以下情况必须暂停并向用户确认：
+1. **阶段一完成后 sink 数量 > 100** — 报告数量和语言分布，询问是否全量审计或缩小范围
+2. **阶段一完成后 sink 数量 = 0** — 确认搜索范围是否正确
+3. **阶段三完成后高风险 sink > 50** — 报告风险分布，询问是否全部进入深度审计
+4. **引用的脚本文件不存在于代码库中** — 记录为"脚本缺失"，跳过该 sink 的脚本审计，在报告中标注
+5. **审计过程中发现 sink 来自框架/库代码而非业务代码** — 向用户确认是否需要审计框架代码
 
 ### 阶段二：读取 Sink 上下文与参数溯源
 
@@ -95,16 +172,25 @@ description: "审计源代码中与外部脚本执行相关的安全漏洞。当
 2. **命令内容：** 传给 sink 的命令参数是什么？是字面量、变量、还是拼接结果？
 3. **条件守卫：** sink 调用前是否有 if/switch/校验逻辑？
 4. **参数溯源（向上追溯最多 2 层）：**
-   - 第 1 层：传给 sink 的变量在当前函数内是怎么赋值的？是函数参数、局部变量、还是全局变量？
-   - 第 2 层：如果变量来自函数参数，该函数的调用者传入了什么？调用者的参数又来自哪里？
-   - 追溯目标是判断参数是否来自外部输入（HTTP 请求、命令行参数、文件上传、环境变量、数据库值、配置文件等）
+
+"一层"的定义：从当前代码位置出发，每经过一次**函数签名跳转**算一层。具体规则：
+- 变量赋值（`x = foo()`）→ 跳转到 `foo()` 的定义 = 1 层
+- 函数参数（`bar(x)` 中的 `x`）→ 跳转到 `bar()` 的调用者 = 1 层
+- 类的属性访问（`self.x`）→ 追溯到赋值位置 = 1 层
+- 回调函数/事件处理器 → 追溯到注册位置 = 1 层
+- 配置文件读取（`config.get("key")`）→ 追溯到配置文件 = 1 层（检查配置文件是否可被外部修改）
+
+追溯步骤：
+1. 第 1 层：传给 sink 的变量在当前函数内是怎么赋值的？是函数参数、局部变量、还是全局变量？
+2. 第 2 层：如果变量来自函数参数，该函数的调用者传入了什么？调用者的参数又来自哪里？
+3. 追溯目标是判断参数是否来自外部输入（HTTP 请求、命令行参数、文件上传、环境变量、数据库值、配置文件等）
 
 **参数来源判定结果：**
 - **确认外部输入：** 参数可追溯到外部输入源 → 标记为"外部参数"
 - **确认内部常量：** 参数为硬编码常量或内部生成的值 → 标记为"内部参数"
-- **不确定：** 追溯 2 层后仍无法确定参数来源（如来自复杂的框架调用链、回调函数、动态分发等）→ 标记为"不确定，需人工确认"
+- **不确定：** 追溯 2 层后仍无法确定参数来源（如来自复杂的框架调用链、回调函数、动态分发等），或第 2 层的函数调用者超过 5 个且无法确定哪个是实际调用者 → 标记为"不确定，需人工确认"
 
-无论参数来源判定结果如何，只要 sink 的命令参数中包含变量（非纯字面量），都必须进入阶段四深度审计。不确定的情况不跳过审计，而是在报告中明确标注。
+阶段二完成后，所有含变量的 sink 初步标记为需进入阶段四。阶段三的风险分类将决定最终是否进入：高风险和中风险进入阶段四，低风险（确认内部常量）仅记录。不确定的情况不跳过审计，而是在报告中明确标注。
 
 **⛔ 阶段二检查点 — 必须全部通过才能进入阶段三：**
 - [ ] 对每个 sink 点，已读取所在函数的完整代码（LSP 获取函数体，或 sink 前 50-80 行 + 后 20 行）
@@ -163,24 +249,25 @@ sink 的命令参数为完全硬编码的字面量字符串，不包含任何变
 
 | 命令 | 参考文件 | 涉及的安全问题 |
 |------|----------|---------------|
-| `tar`、`unzip`、`7z`、`cpio`、`jar xf` | `references/cmd-tar.md` | 命令注入、跨目录解压、符号链接/硬链接/设备文件 |
-| `curl` | `references/cmd-curl.md` | 命令注入、上传下载、SSRF、操作任意文件 |
-| `wget` | `references/cmd-wget.md` | 命令注入、上传下载、操作任意文件 |
-| `sed` | `references/cmd-sed.md` | 命令注入、修改配置、操作任意文件 |
-| `mysql`、`psql`、`sqlite3` | `references/cmd-mysql.md` | SQL 注入、命令注入 |
-| `sftp`、`scp`、`ssh`、`sshpass` | `references/cmd-sftp.md` | 上传下载、跨目录读写、完整性校验缺失 |
-| `ftp`、`lftp` | `references/cmd-ftp.md` | 命令注入、上传下载、修改配置 |
-| `rsync` | `references/cmd-rsync.md` | 命令注入、跨目录读写、操作任意文件 |
+| `tar`、`unzip`、`7z`、`cpio`、`jar xf` | `references/cmd-tar.md` | 命令注入、跨目录解压、跨目录读写、操作任意文件、完整性校验缺失 |
+| `curl` | `references/cmd-curl.md` | 命令注入、上传下载、SSRF、跨目录读写、操作任意文件、完整性校验缺失 |
+| `wget` | `references/cmd-wget.md` | 命令注入、上传下载、跨目录读写、操作任意文件、完整性校验缺失 |
+| `sed` | `references/cmd-sed.md` | 命令注入、修改配置未校验参数、操作任意文件、跨目录读写 |
+| `mysql`、`psql`、`sqlite3`、`zsql` | `references/cmd-mysql.md` | SQL 注入、命令注入、修改配置未校验参数、操作任意文件 |
+| `sftp`、`scp`、`ssh`、`sshpass` | `references/cmd-sftp.md` | 命令注入、上传下载、跨目录读写、操作任意文件、完整性校验缺失 |
+| `ftp`、`lftp` | `references/cmd-ftp.md` | 命令注入、上传下载、跨目录读写、修改配置 |
+| `rsync` | `references/cmd-rsync.md` | 命令注入、上传下载、跨目录读写、操作任意文件、完整性校验缺失 |
 | `mount`、`nfs`、`exportfs`、`showmount` | `references/cmd-mount.md` | 命令注入、跨目录读写、修改配置 |
-| `rm`、`chmod`、`chown`、`mv`、`cp`、`cat`、`dd`、`ln`、`touch`、`truncate`、`shred`、`tee`、`find` | `references/cmd-file-ops.md` | 操作任意文件、跨目录读写、命令注入 |
-| `rpm`、`dpkg`、`apt-get`、`yum`、`pip`、`npm`、`gem` | `references/cmd-rpm.md` | 命令注入、完整性校验缺失 |
-| `spawn`、`send`、`expect`、`interact`（TCL/Expect） | `references/cmd-expect.md` | 命令注入、上传下载、操作任意文件 |
-| `systemctl`、`service`、`crontab`、`sysctl`、`iptables`、`export`、`env` | `references/cmd-systemctl.md` | 修改配置、命令注入 |
-| `eval`、`exec`、`source`、`.`、`xargs` | `references/cmd-eval.md` | 命令注入、跨脚本污点传播 |
-| `bash -c`、`sh -c`、`perl -e`、`python -c`、`python3 -c`、`lua -e`、`ruby -e`、`php -r`、`awk`、`node -e` | `references/cmd-cross-lang.md` | 跨语言代码注入、命令注入、跨语言污点传播 |
+| `rm`、`chmod`、`chown`、`mv`、`cp`、`cat`、`dd`、`ln`、`touch`、`truncate`、`shred`、`tee`、`find`、`install`、`usermod`、`adduser` | `references/cmd-file-ops.md` | 操作任意文件、跨目录读写、命令注入、文件权限劫持 |
+| `rpm`、`dpkg`、`apt-get`、`yum`、`pip`、`npm`、`gem` | `references/cmd-rpm.md` | 命令注入、完整性校验缺失、修改配置 |
+| `spawn`、`send`、`expect`、`interact`（TCL/Expect） | `references/cmd-expect.md` | 命令注入、上传下载、操作任意文件、修改配置 |
+| `systemctl`、`service`、`crontab`、`sysctl`、`iptables`、`export`、`env`、`supervisorctl`、`monit`、`update-rc.d`、`chkconfig` | `references/cmd-systemctl.md` | 修改配置、命令注入、环境变量注入 |
+| `eval`、`exec`、`source`、`.`、`xargs`、`declare`、`flock` | `references/cmd-eval.md` | 命令注入、跨脚本污点传播 |
+| `bash -c`、`sh -c`、`perl -e`、`python -c`、`python3 -c`、`lua -e`、`ruby -e`、`php -r`、`awk`、`node -e`、`java`（JVM 参数）、`keytool`、`openssl` | `references/cmd-cross-lang.md` | 跨语言代码注入、命令注入、跨语言污点传播、JVM/Node 参数注入 |
 | `nc`、`ncat` | `references/cmd-nc.md` | 命令注入、上传下载 |
+| `docker`、`docker-compose`、`kubectl`、`helm` | `references/cmd-docker.md` | 命令注入、跨目录读写、操作任意文件、修改配置 |
 
-**未在上表中列出的命令：** 如果脚本中出现了上表未覆盖的命令（如 `docker`、`kubectl`、`ansible`、`make` 等），仍需基于通用安全原则进行审计：检查该命令的参数是否包含用户可控变量、是否存在路径穿越、是否存在命令注入等。在报告中标注该命令未被 cmd-*.md 覆盖，审计基于通用模式。
+**未在上表中列出的命令：** 如果脚本中出现了上表未覆盖的命令（如 `ansible`、`make`、`terraform` 等），仍需基于通用安全原则进行审计：检查该命令的参数是否包含用户可控变量、是否存在路径穿越、是否存在命令注入等。在报告中标注该命令未被 cmd-*.md 覆盖，审计基于通用模式。
 
 **按需加载流程：**
 1. 读取脚本内容
@@ -192,7 +279,7 @@ sink 的命令参数为完全硬编码的字面量字符串，不包含任何变
 **参数消毒检测：**
 在分析脚本中的每条污点传播路径时，同时加载 `references/patterns-sanitization.md` 检查参数是否经过消毒：
 - **严格消毒**（白名单字符过滤、正则白名单、专业转义函数、参数化传递、路径前缀验证）→ **终止该路径的传播分析**，在报告中标注消毒位置（文件名:行号）、消毒方式、评定风险为低
-- **弱消毒**（黑名单过滤、简单引号包裹、长度限制）→ **继续传播分析**，但降低风险等级
+- **弱消毒**（黑名单过滤、简单引号包裹、长度限制）→ **继续传播分析**，但风险等级降一级（高→中，中→低）
 - **无消毒** → 继续传播分析，保持原风险等级
 
 **审计 sink 处的内联命令时（高风险 sink）：**
@@ -230,7 +317,7 @@ sink 的命令参数为完全硬编码的字面量字符串，不包含任何变
 
 ### 阶段五：报告生成
 
-生成 Markdown 格式的安全审计报告。读取 `references/report-template.md` 获取具体格式。
+生成 Markdown 格式的安全审计报告。读取 `references/report-template.md` 获取结构格式，读取 `references/example-report.md` 了解期望的输出质量和详细程度。
 
 **安全问题分类标准（用于报告中的"安全问题类别"字段）：**
 
@@ -245,6 +332,7 @@ sink 的命令参数为完全硬编码的字面量字符串，不包含任何变
 | 完整性校验缺失 | 下载的文件或接收的数据未经校验即使用 |
 | 修改配置未校验参数 | 配置变更未验证参数即应用 |
 | 跨脚本污点传播 | 污点数据跨脚本传播到下游危险操作 |
+| 文件权限劫持 | 通过通配符 + --reference 劫持文件属主或权限 |
 
 **去重与分组策略：**
 - 同一个脚本被多个 sink 调用时，脚本审计结果只写一次，在各 sink 发现中引用
@@ -323,7 +411,11 @@ sink 的命令参数为完全硬编码的字面量字符串，不包含任何变
 **阶段一常见错误：**
 - 只搜索 `system()` 而遗漏 `popen()`、`exec*()`、`subprocess.*` 等其他 sink 函数 → 必须搜索参考文件中列出的**所有** sink 签名
 - 忽略间接 sink（项目自定义的 `run_command()` 等封装函数）→ 发现封装函数后必须搜索其所有调用点
-- 只检测了一种语言就停止 → 必须检测项目中存在的所有语言
+- 只检测了 C/Python/Go/Java 就停止 → 必须检测项目中存在的所有语言（包括 NodeJS、Shell、Ruby、Scala、Rust、Lua、PHP）
+- 忽略 Shell 脚本中的 sink → `.sh`/`.bash` 文件中的 `eval`、`bash -c`、`source`、`declare`、Here Document 等也是重要 sink
+- 忽略 Electron 应用的 `shell.openExternal`/`shell.openPath` → 这些 API 可通过 `file:` 协议执行本地程序
+- 未排除依赖目录和构建产物 → `node_modules/`、`vendor/`、`build/` 中的 sink 是第三方代码，不是项目代码
+- 未识别测试文件 → 测试文件中的 sink 不构成生产风险，应标记并降低优先级
 
 **阶段二常见错误：**
 - 只看 grep 匹配的那一行就下结论 → 必须用 LSP 读取完整函数体，或读取 sink 前 50-80 行 + 后 20 行
@@ -342,12 +434,13 @@ sink 的命令参数为完全硬编码的字面量字符串，不包含任何变
 - 脚本审计时只做污点传播不做安全检查 → 脚本中的命令也要用 cmd-*.md 比对高危模式
 - 高风险 sink 同时引用脚本文件时只审计内联命令 → 两条路径都要走
 - 递归追踪超过 3 层 → 最大深度 3 层，超过则标记并停止
+- 只审计 C/Python/Go/Java 四种语言 → 必须检测项目中存在的所有语言（包括 NodeJS、Shell、Ruby、Scala、Rust、Lua、PHP）
 
 **阶段五常见错误：**
 - 遗漏参数来源为"不确定"的标注 → 报告中必须明确标注
 - 同一漏洞多条路径写多条发现 → 应合并为一条，列出所有可达路径
 - 消毒终止的路径不写进报告 → 必须标注消毒位置和风险评定
-- 只输出结论不输出分析过程 → 每个发现必须包含完整的 8 步分析过程
+- 只输出结论不输出分析过程 → 每个发现必须包含完整的分析过程（8 步，详见 `references/report-template.md`）
 
 **阶段六常见错误：**
 - 跳过反思直接结束 → 必须执行完整性、准确性、误报/漏报三项检查

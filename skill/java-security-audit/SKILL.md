@@ -18,15 +18,104 @@ tools:
 3. **输出统一**：所有中间输出和最终报告必须是 Markdown 文件，存放在 `output/` 目录
 4. **断言即契约**：每个阶段必须评估所有强制断言，未评估则快速失败
 5. **信息不足时询问**：当项目无 pom.xml/build.gradle 时，先询问用户，不得自行假设
+6. **输出语言**：所有报告内容必须使用中文输出。标题、描述、分析文字、表头、结论均使用中文。以下内容保持英文：代码片段、文件路径、类名、方法名、curl 命令、SQL payload、技术状态码（PASS/FAIL/N/A、REACHABLE/UNREACHABLE、DETERMINISTIC/HEURISTIC/SUBJECTIVE、CONFIRMED/LIKELY/POSSIBLE）
+7. **脚本优先**：确定性任务（扫描、提取、匹配、计数、验证）必须先调用脚本完成，AI 仅负责分析脚本输出和主观判断任务。禁止 AI 自行执行可用脚本完成的确定性操作
+
+## 脚本层架构
+
+本审计体系采用 **脚本层 + AI 层 + 验证层** 三层架构：
+
+```
+┌─────────────────────────────────────────────────────┐
+│  脚本层（确定性，100% 可重复）                        │
+│  scripts/recon.sh        → 项目侦察扫描              │
+│  scripts/extract-apis.sh → API 端点提取              │
+│  scripts/scan-sinks.sh   → Sink 模式扫描             │
+│  scripts/scan-configs.sh → 配置文件安全扫描           │
+│  scripts/validate-output.sh → 输出完整性验证          │
+├─────────────────────────────────────────────────────┤
+│  AI 层（判断力，标注置信度）                          │
+│  分析脚本输出 → 补充业务含义 → 评估风险 → 生成 PoC    │
+├─────────────────────────────────────────────────────┤
+│  验证层（确定性，自动检测遗漏）                       │
+│  validate-output.sh → 检查必填段落/表格/格式          │
+└─────────────────────────────────────────────────────┘
+```
+
+### 脚本调用规范
+
+每个检查点的执行顺序：
+
+```
+1. [脚本] 执行确定性扫描 → 输出 *-raw.json
+2. [AI]   读取 raw.json → 补充分析 → 输出 *.md 报告
+3. [脚本] validate-output.sh → 验证报告完整性
+4. [AI]   修复验证发现的缺失项
+```
+
+### 脚本位置
+
+所有脚本位于本 skill 的 `scripts/` 目录下。调用方式：
+
+```bash
+# Phase 1: 项目侦察
+bash {skill_dir}/scripts/recon.sh {project_dir} output/phase1-raw.json
+
+# API 提取
+bash {skill_dir}/scripts/extract-apis.sh {project_dir} output/apis-raw.json
+
+# Sink 扫描
+bash {skill_dir}/scripts/scan-sinks.sh {project_dir} output/sinks-raw.json
+
+# 配置扫描
+bash {skill_dir}/scripts/scan-configs.sh {project_dir} output/configs-raw.json
+
+# 输出验证
+bash {skill_dir}/scripts/validate-output.sh output/ {phase}
+```
+
+其中 `{skill_dir}` 为本 SKILL.md 所在目录的绝对路径。
+
+### 任务分工表
+
+| 任务 | 执行者 | 原因 |
+|------|--------|------|
+| 扫描 @Controller/@RestController | **脚本** | 正则匹配，100% 确定性 |
+| 提取 @RequestMapping 路径 | **脚本** | 正则匹配，100% 确定性 |
+| 提取 @RequestParam 参数 | **脚本** | 正则匹配，100% 确定性 |
+| 扫描 Sink 模式 | **脚本** | 正则匹配，100% 确定性 |
+| 提取 application.yml 配置 | **脚本** | 文件解析，100% 确定性 |
+| 扫描 Filter/Interceptor 注册 | **脚本** | 正则匹配，100% 确定性 |
+| 验证输出完整性 | **脚本** | 格式检查，100% 确定性 |
+| 评估业务含义 | **AI** | 需要理解业务上下文 |
+| 评估消毒有效性 | **AI** | 需要理解代码逻辑 |
+| 构建攻击树 | **AI** | 需要安全专家推理 |
+| 生成 PoC | **AI** | 需要创造性思维 |
+| 评估可达性 | **AI** | 需要理解请求处理链 |
+| 业务影响评估 | **AI** | 需要理解业务场景 |
 
 ## 工作流程
 
 ### 检查点 1：项目初始化与配置文件分析
 
 ```
-Task: java-recon skill
-输入: 项目根路径
-输出: output/phase1-recon.md（含资产台账 + 配置文件深度分析 Config_Analysis）
+步骤 1.1 [脚本] 执行确定性扫描:
+  bash {skill_dir}/scripts/recon.sh {project_dir} output/phase1-raw.json
+  脚本输出: 构建工具、框架版本、Controller 清单、Filter 清单、Interceptor 清单、
+           SecurityFilterChain 清单、配置文件清单、依赖清单、协议特征清单
+
+步骤 1.2 [AI] 读取 phase1-raw.json，补充分析:
+  - 为每个 Controller/Filter/Interceptor 补充业务含义说明
+  - 评估依赖版本的安全风险（CVE 查询）
+  - 深度分析配置文件中的安全相关项（C6 断言）
+  - 识别启动时安全配置资产（C7 断言）
+  - 识别业务协议资产（C8 断言）
+  输出: output/phase1-recon.md
+
+步骤 1.3 [脚本] 验证输出:
+  bash {skill_dir}/scripts/validate-output.sh output/ phase1
+  若验证失败 → AI 修复缺失项后重新验证
+
 验证: 
   - 资产台账非空 → 进入检查点 2；否则 ERR-EMPTY-INVENTORY 终止
   - Config_Analysis 非空 → 配置文件风险项传递到后续检查点
@@ -105,16 +194,27 @@ Task: java-recon skill
 ### 检查点 4：API 发现与风险评估
 
 ```
-Task: java-api-discovery skill
-输入: output/phase1-recon.md（含 Config_Analysis） + 项目根路径
-输出:
-  - output/api-inventory.md（全量 API 路由清单 + 业务上下文）
-  - output/api-risk-assessment.md（三维风险评分 + 业务用途 + 参数业务语义 + 配置文件关联 + 审计优先级）
+步骤 4.1 [脚本] 执行确定性扫描:
+  bash {skill_dir}/scripts/extract-apis.sh {project_dir} output/apis-raw.json
+  脚本输出: 所有端点的 HTTP 方法、路径、参数、注解、安全注解（100% 确定性）
+
+步骤 4.2 [AI] 读取 apis-raw.json + phase1-recon.md，补充分析:
+  - 为每个端点补充业务用途说明
+  - 为每个参数补充业务含义
+  - 执行三维风险评分（参数校验因子 × 高危参数因子 × 业务意义因子）
+  - 关联配置文件风险项到受影响的 API
+  - 生成审计优先级排序
+  输出: output/api-inventory.md + output/api-risk-assessment.md
+
+步骤 4.3 [脚本] 验证输出:
+  bash {skill_dir}/scripts/validate-output.sh output/ phase4
+  若验证失败 → AI 修复缺失项后重新验证
 
 验证:
   - 每个端点必须有业务用途说明
   - 每个参数必须有业务含义
   - 若存在配置文件风险项，必须关联到受影响的 API
+  - apis-raw.json 中的端点总数 = api-inventory.md 中的端点总数（资产守恒）
 ```
 
 ### 检查点 4.5：威胁建模（API 审计前置）
@@ -141,15 +241,44 @@ Task: java-api-discovery skill
 ### 检查点 5：API 正向污点审计
 
 ```
-Task: java-api-audit skill
-输入:
-  - output/threat-model.md（威胁建模 + 攻击树 + 调整后的审计优先级）
-  - output/api-risk-assessment.md（来自检查点 4，含业务上下文 + 配置文件关联）
-  - output/phase1-recon.md（含 Config_Analysis 配置文件分析）
-  - output/phase2-filter-audit.md（三层审计 + 执行顺序 + 可达性评估）
-  - output/phase2b-startup-config-audit.md（启动时安全配置审计）
-  - output/phase3-interceptor-audit.md（框架层已知风险）
-输出: output/phase4-api-audit.md
+步骤 5.1 [脚本] 执行 Sink 扫描:
+  bash {skill_dir}/scripts/scan-sinks.sh {project_dir} output/sinks-raw.json
+  脚本输出: 所有 Sink 模式匹配（SQL/文件/HTTP/反序列化/模板/表达式/JNDI/XXE/命令/重定向/LDAP）
+           + 硬编码密钥 + 弱密码学（100% 确定性）
+
+步骤 5.2 [脚本] 执行配置扫描:
+  bash {skill_dir}/scripts/scan-configs.sh {project_dir} output/configs-raw.json
+  脚本输出: 所有安全相关配置项 + 风险评级（100% 确定性）
+
+步骤 5.3 [AI] 读取所有 raw.json + 前序报告，执行深度审计:
+  输入:
+    - output/sinks-raw.json（Sink 扫描结果）
+    - output/configs-raw.json（配置扫描结果）
+    - output/apis-raw.json（API 端点清单）
+    - output/threat-model.md（威胁建模 + 攻击树 + 调整后的审计优先级）
+    - output/api-risk-assessment.md（风险评分 + 业务上下文）
+    - output/phase1-recon.md（配置文件分析 + 业务协议资产清单）
+    - output/phase2-filter-audit.md（三层审计 + 执行顺序 + 可达性评估）
+    - output/phase2b-startup-config-audit.md（启动时安全配置审计）
+    - output/phase3-interceptor-audit.md（框架层已知风险）
+
+  对每个 P0/P1 端点执行:
+    - Source 识别 → Processing 链追踪 → Sink 验证（每步标注确定性）
+    - 参数消毒分析（结合 Sink 类型查 taint-semantics.md 矩阵）
+    - 框架防护关联分析（四层防护矩阵）
+    - 跨请求污点追踪（存储型 XSS/二阶注入/Session 污染）
+    - 业务逻辑漏洞审计（竞态/状态机/价格篡改/工作流绕过）
+    - 业务协议级审计（加载 protocols/ 子文件逐项验证）
+    - 生成可执行 curl PoC + 验证标准
+    - 生成 Fuzzing 字典
+    - 输出整体置信度（CONFIRMED/LIKELY/POSSIBLE）+ 依据
+
+  输出: output/phase4-api-audit.md
+
+步骤 5.4 [脚本] 验证输出:
+  bash {skill_dir}/scripts/validate-output.sh output/ phase4
+  若验证失败 → AI 修复缺失项后重新验证
+
 原则:
   - 每个端点独立章节，必须包含业务用途说明
   - 每个漏洞包含完整正向链路 Source → Processing → Sink（每步含文件全路径+行号+确定性标注）
@@ -160,15 +289,33 @@ Task: java-api-audit skill
   - 必须输出整体置信度（CONFIRMED/LIKELY/POSSIBLE）+ 依据
   - 必须执行跨请求污点追踪（存储型 XSS/二阶注入/Session 污染）
   - 必须执行业务逻辑漏洞审计（竞态/状态机/价格篡改/工作流绕过）
+  - 必须执行业务协议级审计：对 phase1 识别的每个业务协议，加载协议安全清单逐项验证
   - 必须生成 Fuzzing 字典
 ```
 
 ### 检查点 6：生成最终报告
 
 ```
-输入: output/ 目录下所有阶段报告
-输出: output/final-audit-report.md
-结构: 详见 references/final-summary-output.md
+步骤 6.1 [AI] 汇总所有阶段报告:
+  输入: output/ 目录下所有阶段报告
+  输出: output/final-audit-report.md
+  结构: 详见 references/final-summary-output.md
+
+步骤 6.2 [AI] 生成综合安全分析:
+  输入: output/ 目录下所有阶段报告
+  输出: output/comprehensive-security-analysis.md
+
+步骤 6.3 [脚本] 最终验证:
+  bash {skill_dir}/scripts/validate-output.sh output/ all
+  验证内容:
+    - 所有阶段报告文件是否存在
+    - 每个报告是否包含必填段落
+    - 表格行数是否满足最低要求
+    - 是否存在省略语（...、以上为摘要、仅列出）
+    - 输出是否为中文
+    - PoC 是否包含 curl 命令
+    - 确定性标注和置信度是否完整
+  若验证失败 → AI 修复缺失项后重新验证，直到全部通过
 ```
 
 ### 检查点 7：综合安全分析（业务 + 技术 + 配置）
@@ -280,6 +427,9 @@ Task: java-api-audit skill
 | 脱离 Sink 类型判断消毒有效性 | 必须查 taint-semantics.md 矩阵，htmlEscape 对 SQL 无效 |
 | 忽略跨请求污点追踪 | 存储型 XSS/二阶注入/Session 污染必须追踪 DB/Session/缓存的跨请求流向 |
 | 忽略业务逻辑漏洞 | 必须对业务操作类端点执行竞态/状态机/价格篡改/工作流绕过检查 |
+| 不理解业务协议直接审计 | 必须先识别项目使用的业务协议（OAuth2/SAML/支付/密码重置/MFA/JWT 等），加载协议安全清单（business-protocols.md）逐项审计 |
+| 协议审计只做配置检查 | 必须理解协议完整流程（如 OAuth2 的 redirect→state→code→token 每一步），逐步验证每个环节的安全性，而非仅检查 spring.security.oauth2.* 配置项 |
+| Phase 1 不识别业务协议资产 | 必须执行 C8 断言，扫描项目使用的业务安全协议并建立协议资产清单 |
 
 ## 输出文件
 

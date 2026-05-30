@@ -1,6 +1,6 @@
 # 跨语言调用 / bash -c 命令安全风险
 
-Shell 脚本中调用其他语言解释器（perl、python、lua、ruby、php、awk）或使用 `bash -c` / `sh -c` 内联执行。
+Shell 脚本中调用其他语言解释器、使用 `bash -c` / `sh -c` 内联执行，以及 JVM/Node 进程启动参数注入的安全风险。
 
 ## 涉及的安全问题
 - 命令注入（变量插值导致目标语言代码注入）
@@ -186,6 +186,81 @@ node -e "require('child_process').execSync('$USER_CMD')"
 # node 执行脚本文件
 node "$USER_SCRIPT"
 # USER_SCRIPT 可控 → 执行任意 JS 脚本
+```
+
+### JVM 参数注入
+
+当 Java 进程启动参数可控时，JVM 调试参数可触发命令执行：
+
+```bash
+# -XX:OnOutOfMemoryError — 触发 OOM 时执行命令
+java -Xmx5M -XX:OnOutOfMemoryError="touch /tmp/hack" -jar demo.jar
+# 当 OOM 溢出时执行自定义命令
+
+# -XX:OnError — JVM 致命 ERROR 后执行命令
+java -Xmx5M -XX:OnError="touch /tmp/xxx" -jar demo.jar
+
+# 如果白名单允许 java 命令但参数可控，可通过上述参数注入
+```
+
+### keytool — -J 参数透传 JVM
+
+```bash
+# -J 参数透传给 Java 解释器
+keytool -J-javaagent:/tmp/evil.jar
+# 等同于 java -javaagent:/tmp/evil.jar
+# 结合上传恶意 javaagent .jar 文件实现代码执行
+
+# -J 参数不能带空格，需利用 -javaagent 机制
+```
+
+### openssl — -engine 参数加载恶意 .so
+
+```bash
+# openssl 动态加载 engine .so 库
+openssl <command> -engine /path/to/evil.so
+
+# 攻击步骤：
+# 1. 编写恶意 engine.c（利用 __attribute__((constructor))）
+# 2. 编译: gcc -fPIC -o a.o -c engine.c && gcc -shared -o engine.so -lcrypto a.o
+# 3. 上传 engine.so 到服务器
+# 4. 执行: openssl req -engine /path/to/engine.so
+# .so 加载时 constructor 函数自动执行
+
+# 如果产品配置了 openssl 的 sudo 权限，结合上传功能可提权
+```
+
+### Node 进程参数注入
+
+当 Node 进程启动参数可控时：
+
+```bash
+# -e / --eval — 执行任意 JavaScript
+node -e "require('child_process').execSync('calc').toString()"
+
+# -p / --print — 执行并打印结果
+node -p "require('child_process').execSync('id').toString()"
+
+# --inspect-brk — 开启调试端口，通过调试协议执行命令
+node --inspect-brk=9229 app.js
+# 连接 chrome://inspect 或恶意客户端可执行任意代码
+
+# -r / --require — 预加载模块
+# 结合 /proc/self/environ（环境变量可控时）：
+node --require /proc/self/environ
+# 环境变量中包含恶意 JS 代码时执行
+
+# 结合 /proc/self/cmdline（argv0 可控时）：
+node --require /proc/self/cmdline
+
+# NODE_OPTIONS 环境变量 — 注入上述任意参数
+export NODE_OPTIONS="--require /proc/self/environ"
+# 后续所有 Node 进程都会加载该参数
+
+# 原型链污染风险（Node 特定版本）：
+# child_process.spawn 的 options 存在原型链污染
+# 通过 __proto__ 注入 NODE_OPTIONS、env、argv0
+# 已在 v20.5.1+ 等版本修复
 ```
 
 ## 跨语言注入的核心原理

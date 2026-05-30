@@ -1,0 +1,179 @@
+﻿{
+    "scan_time":  "2026-05-29T23:07:16Z",
+    "high_risk_count":  6,
+    "project_dir":  "D:/code/WebGoat-2025.3",
+    "configs":  {
+                    "application-webwolf.properties":  {
+                                                           "items":  [
+                                                                         {
+                                                                             "line":  12,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "ACTUATOR_PORT",
+                                                                             "value":  "-1",
+                                                                             "actualKey":  "management.server.port"
+                                                                         },
+                                                                         {
+                                                                             "line":  14,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SESSION_TIMEOUT",
+                                                                             "value":  "6000",
+                                                                             "actualKey":  "server.servlet.session.timeout"
+                                                                         },
+                                                                         {
+                                                                             "line":  13,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SESSION_COOKIE_NAME",
+                                                                             "value":  "WEBWOLFSESSION",
+                                                                             "actualKey":  "server.servlet.session.cookie.name"
+                                                                         },
+                                                                         {
+                                                                             "line":  1,
+                                                                             "risk":  "HIGH",
+                                                                             "key":  "ERROR_STACKTRACE",
+                                                                             "value":  "always",
+                                                                             "actualKey":  "server.error.include-stacktrace"
+                                                                         },
+                                                                         {
+                                                                             "line":  53,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "OAUTH2_CLIENT_ID",
+                                                                             "value":  "${WEBWOLF_OAUTH_CLIENTID:dummy}",
+                                                                             "actualKey":  "spring.security.oauth2.client.registration.github.client-id"
+                                                                         },
+                                                                         {
+                                                                             "line":  54,
+                                                                             "risk":  "HIGH",
+                                                                             "key":  "OAUTH2_CLIENT_SECRET",
+                                                                             "value":  "[REDACTED]",
+                                                                             "actualKey":  "spring.security.oauth2.client.registration.github.client-secret"
+                                                                         },
+                                                                         {
+                                                                             "line":  19,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "DB_URL",
+                                                                             "value":  "jdbc:hsqldb:file:${webgoat.server.directory}/webgoat",
+                                                                             "actualKey":  "spring.datasource.url"
+                                                                         },
+                                                                         {
+                                                                             "line":  29,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "LOG_LEVEL_APP",
+                                                                             "value":  "DEBUG",
+                                                                             "actualKey":  "logging.level.org.owasp"
+                                                                         },
+                                                                         {
+                                                                             "line":  30,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "LOG_LEVEL_APP",
+                                                                             "value":  "TRACE",
+                                                                             "actualKey":  "logging.level.org.owasp.webwolf"
+                                                                         }
+                                                                     ],
+                                                           "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\resources\\application-webwolf.properties"
+                                                       },
+                    "application-webgoat.properties":  {
+                                                           "items":  [
+                                                                         {
+                                                                             "line":  16,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SSL_ENABLED",
+                                                                             "value":  "${WEBGOAT_SSLENABLED:false}",
+                                                                             "actualKey":  "server.ssl.enabled"
+                                                                         },
+                                                                         {
+                                                                             "line":  12,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SSL_KEYSTORE",
+                                                                             "value":  "${WEBGOAT_KEYSTORE_TYPE:PKCS12}",
+                                                                             "actualKey":  "server.ssl.key-store-type"
+                                                                         },
+                                                                         {
+                                                                             "line":  13,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SSL_KEYSTORE",
+                                                                             "value":  "${WEBGOAT_KEYSTORE:classpath:goatkeystore.pkcs12}",
+                                                                             "actualKey":  "server.ssl.key-store"
+                                                                         },
+                                                                         {
+                                                                             "line":  14,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SSL_KEYSTORE",
+                                                                             "value":  "${WEBGOAT_KEYSTORE_PASSWORD:password}",
+                                                                             "actualKey":  "server.ssl.key-store-password"
+                                                                         },
+                                                                         {
+                                                                             "line":  14,
+                                                                             "risk":  "HIGH",
+                                                                             "key":  "SSL_KEYSTORE_PASSWORD",
+                                                                             "value":  "[REDACTED]",
+                                                                             "actualKey":  "server.ssl.key-store-password"
+                                                                         },
+                                                                         {
+                                                                             "line":  15,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "SSL_KEY_ALIAS",
+                                                                             "value":  "${WEBGOAT_KEY_ALIAS:goat}",
+                                                                             "actualKey":  "server.ssl.key-alias"
+                                                                         },
+                                                                         {
+                                                                             "line":  72,
+                                                                             "risk":  "HIGH",
+                                                                             "key":  "ACTUATOR_EXPOSURE",
+                                                                             "value":  "env, health,configprops",
+                                                                             "actualKey":  "management.endpoints.web.exposure.include"
+                                                                         },
+                                                                         {
+                                                                             "line":  71,
+                                                                             "risk":  "MEDIUM",
+                                                                             "key":  "HEALTH_DETAILS",
+                                                                             "value":  "always",
+                                                                             "actualKey":  "management.endpoint.health.show-details"
+                                                                         },
+                                                                         {
+                                                                             "line":  1,
+                                                                             "risk":  "HIGH",
+                                                                             "key":  "ERROR_STACKTRACE",
+                                                                             "value":  "always",
+                                                                             "actualKey":  "server.error.include-stacktrace"
+                                                                         },
+                                                                         {
+                                                                             "line":  74,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "OAUTH2_CLIENT_ID",
+                                                                             "value":  "${WEBGOAT_OAUTH_CLIENTID:dummy}",
+                                                                             "actualKey":  "spring.security.oauth2.client.registration.github.client-id"
+                                                                         },
+                                                                         {
+                                                                             "line":  75,
+                                                                             "risk":  "HIGH",
+                                                                             "key":  "OAUTH2_CLIENT_SECRET",
+                                                                             "value":  "[REDACTED]",
+                                                                             "actualKey":  "spring.security.oauth2.client.registration.github.client-secret"
+                                                                         },
+                                                                         {
+                                                                             "line":  18,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "DB_URL",
+                                                                             "value":  "jdbc:hsqldb:file:${webgoat.server.directory}/webgoat",
+                                                                             "actualKey":  "spring.datasource.url"
+                                                                         },
+                                                                         {
+                                                                             "line":  31,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "LOG_LEVEL_APP",
+                                                                             "value":  "INFO",
+                                                                             "actualKey":  "logging.level.org.owasp"
+                                                                         },
+                                                                         {
+                                                                             "line":  32,
+                                                                             "risk":  "LOW",
+                                                                             "key":  "LOG_LEVEL_APP",
+                                                                             "value":  "INFO",
+                                                                             "actualKey":  "logging.level.org.owasp.webgoat"
+                                                                         }
+                                                                     ],
+                                                           "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\resources\\application-webgoat.properties"
+                                                       }
+                },
+    "config_files_scanned":  2
+}

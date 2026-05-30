@@ -123,3 +123,18 @@ ssh "$HOST" "$USER_CMD"
 ssh "$USER_HOST" "ls"
 # USER_HOST = "evil.com; rm -rf /"
 ```
+
+### 命令注入 — SSH ProxyCommand 本地注入
+
+```bash
+# ssh -o ProxyCommand 在本地执行命令
+ssh -o ProxyCommand="$USER_CMD" user@host
+# USER_CMD = "touch /tmp/pwned" → 在本机执行命令
+
+# 典型使用场景：通过代理跳转
+ssh -o ProxyCommand="ssh -W %h:%p Jumphost" FooServer
+# 如果 ProxyCommand 参数可控（如用户名注入），在本地执行命令注入
+
+# sftp 同理
+sftp -o ProxyCommand="$USER_CMD" user@host
+```

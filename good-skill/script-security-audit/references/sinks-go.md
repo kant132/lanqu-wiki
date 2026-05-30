@@ -22,16 +22,19 @@ grep 模式: exec\.CommandContext\s*\(
 ```
 grep 模式: syscall\.Exec\s*\(
 ```
+**风险：** 直接传递参数数组（不经过 shell），风险与 `exec.Command()` 类似。需关注参数来源。
 
 ### syscall.ForkExec()
 ```
 grep 模式: syscall\.ForkExec\s*\(
 ```
+**风险：** fork 后 exec，参数以数组形式传递。需关注参数来源和第一个参数是否为 shell 解析器。
 
 ### syscall.StartProcess()
 ```
 grep 模式: syscall\.StartProcess\s*\(
 ```
+**风险：** 底层进程创建接口，参数以数组形式传递。需关注参数来源。
 
 ## os 包
 
@@ -39,6 +42,7 @@ grep 模式: syscall\.StartProcess\s*\(
 ```
 grep 模式: os\.StartProcess\s*\(
 ```
+**风险：** 与 `syscall.StartProcess()` 类似，底层进程创建接口。需关注参数来源。
 
 ## 内联解释器调用模式
 

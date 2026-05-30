@@ -1,0 +1,75 @@
+{
+  "controllers": {
+    "class_annotations": "@(Controller|RestController)",
+    "class_request_mapping": "@RequestMapping\\s*\\(\\s*(?:value\\s*=\\s*)?[\"']([^\"']+)[\"']",
+    "method_mappings": "@(Get|Post|Put|Delete|Patch|Request)Mapping",
+    "path_value": "(?:value|path)\\s*=\\s*[\"']([^\"']+)[\"']"
+  },
+  "sources": {
+    "request_param": "@RequestParam\\s*(?:\\([^)]*\\))?\\s+(\\w+)\\s+(\\w+)",
+    "request_body": "@RequestBody\\s+(\\w+)\\s+(\\w+)",
+    "path_variable": "@PathVariable\\s*(?:\\([^)]*\\))?\\s+(\\w+)\\s+(\\w+)",
+    "request_header": "@RequestHeader\\s*(?:\\([^)]*\\))?\\s+(\\w+)\\s+(\\w+)",
+    "cookie_value": "@CookieValue\\s*(?:\\([^)]*\\))?\\s+(\\w+)\\s+(\\w+)",
+    "get_parameter": "request\\.getParameter\\s*\\(\\s*[\"']([^\"']+)[\"']\\s*\\)",
+    "get_input_stream": "request\\.(getInputStream|getReader)\\s*\\("
+  },
+  "sinks": {
+    "sql_execution": "Statement\\.(executeQuery|executeUpdate|execute)\\s*\\(|createQuery\\s*\\(|createNativeQuery\\s*\\(|\\$\\{",
+    "sql_concat": "[\"']\\s*\\+\\s*\\w+\\s*\\+\\s*[\"'].*(?:SELECT|INSERT|UPDATE|DELETE|WHERE|FROM)",
+    "file_operations": "new\\s+File\\s*\\(|FileInputStream\\s*\\(|FileOutputStream\\s*\\(|Paths\\.get\\s*\\(|\\.transferTo\\s*\\(",
+    "http_requests": "RestTemplate|HttpClient|WebClient|URL\\.openConnection|HttpURLConnection|\\.openStream\\s*\\(",
+    "deserialization": "\\.readObject\\s*\\(|\\.fromXML\\s*\\(|\\.parseObject\\s*\\(|enableDefaultTyping|ObjectInputStream|XMLDecoder",
+    "template_rendering": "getTemplate\\s*\\(|th:utext|\\?new\\s*\\(|VelocityEngine|SpringTemplateEngine",
+    "expression_parsing": "parseExpression\\s*\\(|SpelExpressionParser|StandardEvaluationContext|OgnlUtil|MVEL\\.eval|GroovyShell|ScriptEngine",
+    "jndi": "InitialContext\\.lookup|JndiTemplate\\.lookup|ctx\\.lookup",
+    "xxe": "DocumentBuilderFactory|SAXParser|XMLReader|TransformerFactory|XMLInputFactory",
+    "command_execution": "Runtime\\.exec\\s*\\(|ProcessBuilder",
+    "redirect": "sendRedirect\\s*\\(|RedirectView|\\.forward\\s*\\(",
+    "ldap": "DirContext\\.search|LdapTemplate|SearchControls"
+  },
+  "security_configs": {
+    "csrf_disable": "csrf\\s*\\(\\s*\\w+\\s*->\\s*\\w+\\.disable\\s*\\(\\s*\\)\\s*\\)|csrf\\s*\\(\\s*\\)\\s*\\.disable\\s*\\(\\s*\\)",
+    "headers_disable": "headers\\s*\\(\\s*\\w+\\s*->\\s*\\w+\\.disable\\s*\\(\\s*\\)\\s*\\)|headers\\s*\\(\\s*\\)\\s*\\.disable\\s*\\(\\s*\\)",
+    "permit_all": "permitAll\\s*\\(\\s*\\)",
+    "noop_encoder": "NoOpPasswordEncoder",
+    "security_filter_chain": "SecurityFilterChain",
+    "web_filter": "@WebFilter",
+    "filter_registration": "FilterRegistrationBean",
+    "interceptor": "HandlerInterceptor|addInterceptors",
+    "pre_authorize": "@PreAuthorize",
+    "secured": "@Secured",
+    "roles_allowed": "@RolesAllowed"
+  },
+  "crypto": {
+    "weak_hash": "MessageDigest\\.getInstance\\s*\\(\\s*[\"'](?:MD5|SHA-?1)[\"']\\s*\\)",
+    "weak_cipher": "Cipher\\.getInstance\\s*\\(\\s*[\"'](?:DES|RC4|RC2|Blowfish)",
+    "ecb_mode": "Cipher\\.getInstance\\s*\\(\\s*[\"'][^\"']*/ECB/",
+    "weak_random": "new\\s+Random\\s*\\(",
+    "hardcoded_secret": "(?:password|secret|key|apiKey|api_key)\\s*=\\s*[\"'][^\"']+[\"']",
+    "trust_all": "X509TrustManager.*checkServerTrusted\\s*\\(\\s*\\)\\s*\\{"
+  },
+  "session": {
+    "session_fixation": "sessionFixation",
+    "session_timeout": "server\\.servlet\\.session\\.timeout",
+    "cookie_httponly": "setHttpOnly\\s*\\(\\s*true\\s*\\)|http-only\\s*=\\s*true",
+    "cookie_secure": "setSecure\\s*\\(\\s*true\\s*\\)|secure\\s*=\\s*true"
+  },
+  "oauth2": {
+    "enable_client": "@EnableOAuth2Client|@EnableOAuth2Sso",
+    "client_registration": "spring\\.security\\.oauth2\\.client\\.registration",
+    "resource_server": "@EnableResourceServer|spring\\.security\\.oauth2\\.resourceserver",
+    "jwt_decoder": "JwtDecoder|NimbusJwtDecoder",
+    "authorization_code": "authorization_code|AuthorizationCodeGrantFilter"
+  },
+  "config_files": [
+    "application.yml",
+    "application.yaml",
+    "application.properties",
+    "application-*.yml",
+    "application-*.yaml",
+    "application-*.properties",
+    "bootstrap.yml",
+    "bootstrap.properties"
+  ]
+}

@@ -1,0 +1,2713 @@
+﻿{
+    "scan_time":  "2026-05-29T23:07:14Z",
+    "endpoints":  [
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "lessonPage",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\controller\\StartLesson.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "welcome",
+                          "line":  30,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\controller\\Welcome.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "attack",
+                          "line":  21,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\HammerHead.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/service/reportcard.mvc",
+                          "methodName":  "reportCard",
+                          "line":  34,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\report\\ReportCardController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/server-directory",
+                          "methodName":  "homeDirectory",
+                          "line":  18,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\EnvironmentService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "getHints",
+                          "line":  36,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\HintService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  35,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LabelDebugService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "enabled",
+                                             "type":  "Boolean"
+                                         }
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  48,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LabelDebugService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "fetchLabels",
+                          "line":  31,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LabelService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "lessonName",
+                                             "type":  "LessonName"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/service/lessoninfo.mvc/{lesson}",
+                          "methodName":  "unknown",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LessonInfoService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  44,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LessonMenuService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "lessonName",
+                                             "type":  "LessonName"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/service/lessonoverview.mvc/{lesson}",
+                          "methodName":  "lessonOverview",
+                          "line":  39,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LessonProgressService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "lessonName",
+                                             "type":  "LessonName"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/service/restartlesson.mvc/{lesson}",
+                          "methodName":  "restartLesson",
+                          "line":  35,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\RestartLessonService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/service/enable-security.mvc",
+                          "methodName":  "applySecurity",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\SessionService.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/registration",
+                          "methodName":  "showForm",
+                          "line":  35,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\users\\RegistrationController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/register.mvc",
+                          "methodName":  "registration",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\users\\RegistrationController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/login-oauth.mvc",
+                          "methodName":  "registrationOAUTH",
+                          "line":  65,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\users\\RegistrationController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/scoreboard-data",
+                          "methodName":  "getRankings",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\users\\Scoreboard.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/WebWolf",
+                          "methodName":  "openWebWolf",
+                          "line":  19,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\WebWolfRedirect.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "userId",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "verifyMethod",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  41,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\authbypass\\VerifyAccount.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "select",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "radio",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "checkbox",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/BypassRestrictions/FieldRestrictions",
+                          "methodName":  "completed",
+                          "line":  20,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\bypassrestrictions\\BypassRestrictionsFieldRestrictions.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "field1",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "field2",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "field3",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/BypassRestrictions/frontendValidation",
+                          "methodName":  "completed",
+                          "line":  20,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\bypassrestrictions\\BypassRestrictionsFrontendValidation.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/challenge/1",
+                          "methodName":  "completed",
+                          "line":  28,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge1\\Assignment1.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  23,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge1\\ImageServlet.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username_login",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password_login",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/challenge/5",
+                          "methodName":  "login",
+                          "line":  32,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge5\\Assignment5.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "link",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/challenge/7/reset-password/{link}",
+                          "methodName":  "resetPassword",
+                          "line":  64,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge7\\Assignment7.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "email",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/challenge/7",
+                          "methodName":  "sendPasswordResetLink",
+                          "line":  78,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge7\\Assignment7.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/challenge/7/.git",
+                          "methodName":  "git",
+                          "line":  104,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge7\\Assignment7.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "nrOfStars",
+                                             "type":  "int"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/challenge/8/vote/{stars}",
+                          "methodName":  "vote",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge8\\Assignment8.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/challenge/8/votes/",
+                          "methodName":  "getVotes",
+                          "line":  58,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge8\\Assignment8.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/challenge/8/votes/average",
+                          "methodName":  "unknown",
+                          "line":  65,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge8\\Assignment8.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/challenge/8/notUsed",
+                          "methodName":  "notUsed",
+                          "line":  76,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge8\\Assignment8.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "flag",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "flagNumber",
+                                             "type":  "int"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/challenge/flag/{flagNumber}",
+                          "methodName":  "postFlag",
+                          "line":  27,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\FlagController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "successMessage",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/ChromeDevTools/dummy",
+                          "methodName":  "completed",
+                          "line":  33,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\chromedevtools\\NetworkDummy.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "network_num",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "number",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  30,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\chromedevtools\\NetworkLesson.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "networkNum",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/ChromeDevTools/network",
+                          "methodName":  "ok",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\chromedevtools\\NetworkLesson.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_0_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_1_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_2_solution",
+                                             "type":  "String[]"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/cia/quiz",
+                          "methodName":  "completed",
+                          "line":  24,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cia\\CIAQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/cia/quiz",
+                          "methodName":  "getResults",
+                          "line":  55,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cia\\CIAQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/clientSideFiltering/attack1",
+                          "methodName":  "completed",
+                          "line":  27,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ClientSideFilteringAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "checkoutCode",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/clientSideFiltering/getItForFree",
+                          "methodName":  "completed",
+                          "line":  31,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ClientSideFilteringFreeAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "clientSideFiltering/salaries",
+                          "methodName":  "unknown",
+                          "line":  55,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\Salaries.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/clientSideFiltering/challenge-store/clientSideFiltering/challenge-store",
+                          "methodName":  "unknown",
+                          "line":  23,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ShopEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "code",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/clientSideFiltering/challenge-store/coupons/{code}",
+                          "methodName":  "getDiscountCode",
+                          "line":  53,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ShopEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/clientSideFiltering/challenge-store/coupons",
+                          "methodName":  "all",
+                          "line":  61,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ShopEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/crypto/encoding/basic",
+                          "methodName":  "getBasicAuth",
+                          "line":  29,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\EncodingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer_user",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer_pwd",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/crypto/encoding/basic-auth",
+                          "methodName":  "completed",
+                          "line":  44,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\EncodingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/crypto/hashing/md5",
+                          "methodName":  "getMd5",
+                          "line":  30,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\HashingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/crypto/hashing/sha256",
+                          "methodName":  "getSha256",
+                          "line":  49,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\HashingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer_pwd1",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer_pwd2",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/crypto/hashing",
+                          "methodName":  "completed",
+                          "line":  63,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\HashingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "secretFileName",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "secretText",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/crypto/secure/defaults",
+                          "methodName":  "completed",
+                          "line":  27,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\SecureDefaultsAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/crypto/signing/getprivate",
+                          "methodName":  "getPrivateKey",
+                          "line":  37,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\SigningAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "modulus",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "signature",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/crypto/signing/verify",
+                          "methodName":  "completed",
+                          "line":  52,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\SigningAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer_pwd1",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/crypto/encoding/xor",
+                          "methodName":  "completed",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\XOREncodingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  29,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFConfirmFlag1.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "feedback",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  41,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFFeedback.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "flag",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/csrf/feedback",
+                          "methodName":  "flag",
+                          "line":  69,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFFeedback.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  25,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFGetFlag.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFLogin.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  53,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\ForgedReviews.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/csrf/review",
+                          "methodName":  "createNewReview",
+                          "line":  70,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\ForgedReviews.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "token",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/InsecureDeserialization/task",
+                          "methodName":  "completed",
+                          "line":  32,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\deserialization\\InsecureDeserializationTask.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@CookieValue",
+                                             "name":  "cookieValue",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/HijackSession/login",
+                          "methodName":  "login",
+                          "line":  47,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\hijacksession\\HijackSessionAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "QTY",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "Total",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/HtmlTampering/task",
+                          "methodName":  "completed",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\htmltampering\\HtmlTamperingTask.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "person",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/HttpBasics/attack1",
+                          "methodName":  "completed",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\httpbasics\\HttpBasicsLesson.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "answer",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "magic_answer",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "magic_num",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/HttpBasics/attack2",
+                          "methodName":  "completed",
+                          "line":  26,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\httpbasics\\HttpBasicsQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestHeader",
+                                             "name":  "headerValue",
+                                             "type":  "Boolean"
+                                         }
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  24,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\httpproxies\\HttpBasicsInterceptRequest.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "attributes",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/IDOR/diff-attributes",
+                          "methodName":  "completed",
+                          "line":  26,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORDiffAttributes.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "userId",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "userSubmittedProfile",
+                                             "type":  "UserProfile"
+                                         }
+                                     ],
+                          "httpMethod":  "PUT",
+                          "path":  "/IDOR/profile/{userId}",
+                          "methodName":  "completed",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDOREditOtherProfile.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/IDOR/login",
+                          "methodName":  "completed",
+                          "line":  47,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORLogin.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "userId",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  39,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORViewOtherProfile.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  25,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORViewOwnProfile.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "url",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/IDOR/profile/alt-path",
+                          "methodName":  "completed",
+                          "line":  32,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORViewOwnProfileAltUrl.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/InsecureLogin/task",
+                          "methodName":  "completed",
+                          "line":  18,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\insecurelogin\\InsecureLoginTask.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/InsecureLogin/login",
+                          "methodName":  "login",
+                          "line":  27,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\insecurelogin\\InsecureLoginTask.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/JWT//JWT/",
+                          "methodName":  "unknown",
+                          "line":  29,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderJKUEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "user",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/jku/follow/{user}",
+                          "methodName":  "unknown",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderJKUEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "token",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/jku/delete",
+                          "methodName":  "unknown",
+                          "line":  49,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderJKUEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/JWT//JWT/",
+                          "methodName":  "unknown",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderKIDEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "user",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/kid/follow/{user}",
+                          "methodName":  "unknown",
+                          "line":  48,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderKIDEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "token",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/kid/delete",
+                          "methodName":  "unknown",
+                          "line":  57,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderKIDEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "user",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/decode",
+                          "methodName":  "decode",
+                          "line":  20,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTDecodeEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_0_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_1_solution",
+                                             "type":  "String[]"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/quiz",
+                          "methodName":  "completed",
+                          "line":  24,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/JWT/quiz",
+                          "methodName":  "getResults",
+                          "line":  50,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  49,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTRefreshEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestHeader",
+                                             "name":  "token",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/refresh/checkout",
+                          "methodName":  "checkout",
+                          "line":  83,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTRefreshEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestHeader",
+                                             "name":  "token",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/refresh/newToken",
+                          "methodName":  "newToken",
+                          "line":  108,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTRefreshEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/JWT/secret/gettoken",
+                          "methodName":  "getSecretToken",
+                          "line":  43,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTSecretKeyEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "token",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/secret",
+                          "methodName":  "login",
+                          "line":  59,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTSecretKeyEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "user",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/JWT/votings/login",
+                          "methodName":  "login",
+                          "line":  103,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTVotesEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@CookieValue",
+                                             "name":  "accessToken",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/JWT/votings",
+                          "methodName":  "getVotes",
+                          "line":  126,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTVotesEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "title",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@CookieValue",
+                                             "name":  "accessToken",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/votings/{title}",
+                          "methodName":  "vote",
+                          "line":  154,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTVotesEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@CookieValue",
+                                             "name":  "accessToken",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/JWT/votings",
+                          "methodName":  "resetVotes",
+                          "line":  179,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTVotesEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "param1",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "param2",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/lesson-template/sample-attack",
+                          "methodName":  "completed",
+                          "line":  35,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\lessontemplate\\SampleAttack.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "user",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "lesson-template/shop/{user}",
+                          "methodName":  "getItemsInBasket",
+                          "line":  64,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\lessontemplate\\SampleAttack.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/LogSpoofing/log-bleeding",
+                          "methodName":  "completed",
+                          "line":  36,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\logging\\LogBleedingTask.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/LogSpoofing/log-spoofing",
+                          "methodName":  "completed",
+                          "line":  21,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\logging\\LogSpoofingTask.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "completed",
+                          "line":  26,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACHiddenMenus.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "listUsers",
+                          "line":  33,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACUsers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "usersService",
+                          "line":  50,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACUsers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "usersFixed",
+                          "line":  61,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACUsers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "newUser",
+                                             "type":  "User"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  76,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACUsers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "DELETE",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  90,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACUsers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "simple",
+                          "line":  34,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACYourHash.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "admin",
+                          "line":  37,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACYourHashAdmin.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "Object",
+                                             "type":  "Map\u003cString,"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "passwordReset",
+                          "line":  37,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\QuestionsAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "email",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/PasswordReset/reset/login",
+                          "methodName":  "login",
+                          "line":  69,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\ResetLinkAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "link",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/PasswordReset/reset/reset-password/{link}",
+                          "methodName":  "resetPassword",
+                          "line":  84,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\ResetLinkAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/PasswordReset/reset/change-password",
+                          "methodName":  "changePassword",
+                          "line":  100,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\ResetLinkAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "email",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/PasswordReset/ForgotPassword/create-password-reset-link",
+                          "methodName":  "sendPasswordResetLink",
+                          "line":  53,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\ResetLinkAssignmentForgotPassword.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/PasswordReset/SecurityQuestions",
+                          "methodName":  "completed",
+                          "line":  80,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\SecurityQuestionAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "email",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "login",
+                          "line":  41,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\SimpleMailAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "emailReset",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "resetPassword",
+                          "line":  59,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\SimpleMailAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  34,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUpload.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/PathTraversal/profile-picture",
+                          "methodName":  "getProfilePicture",
+                          "line":  46,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUpload.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  34,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadFix.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/PathTraversal/profile-picture-fix",
+                          "methodName":  "getProfilePicture",
+                          "line":  46,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadFix.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  33,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadRemoveUserInput.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "secret",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/PathTraversal/random",
+                          "methodName":  "execute",
+                          "line":  79,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadRetrieval.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/PathTraversal/random-picture",
+                          "methodName":  "getProfilePicture",
+                          "line":  90,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadRetrieval.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  51,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileZipSlip.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/PathTraversal/zip-slip/",
+                          "methodName":  "getProfilePicture",
+                          "line":  97,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileZipSlip.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@PathVariable",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/PathTraversal/zip-slip/profile-image/{username}",
+                          "methodName":  "getProfileImage",
+                          "line":  103,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileZipSlip.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "SecurePasswords/assignment",
+                          "methodName":  "completed",
+                          "line":  25,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\securepasswords\\SecurePasswordsAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SpoofCookie/login",
+                          "methodName":  "login",
+                          "line":  46,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\spoofcookie\\SpoofCookieAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/SpoofCookie/cleanup",
+                          "methodName":  "cleanup",
+                          "line":  62,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\spoofcookie\\SpoofCookieAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "email",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "PUT",
+                          "path":  "/SqlInjectionAdvanced/register",
+                          "methodName":  "registerNewUser",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionChallenge.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "username",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "password",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionAdvanced/login",
+                          "methodName":  "login",
+                          "line":  26,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionChallengeLogin.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "userId",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionAdvanced/attack6a",
+                          "methodName":  "completed",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionLesson6a.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "userid_6b",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionAdvanced/attack6b",
+                          "methodName":  "completed",
+                          "line":  31,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionLesson6b.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_0_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_1_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_2_solution",
+                                             "type":  "String[]"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionAdvanced/quiz",
+                          "methodName":  "completed",
+                          "line":  30,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/SqlInjectionAdvanced/quiz",
+                          "methodName":  "getResults",
+                          "line":  67,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "action_string",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack10",
+                          "methodName":  "completed",
+                          "line":  41,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson10.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "query",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack2",
+                          "methodName":  "completed",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson2.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "query",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack3",
+                          "methodName":  "completed",
+                          "line":  35,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson3.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "query",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack4",
+                          "methodName":  "completed",
+                          "line":  36,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson4.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack5",
+                          "methodName":  "completed",
+                          "line":  53,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson5.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "account",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "operator",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "injection",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/assignment5a",
+                          "methodName":  "completed",
+                          "line":  37,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson5a.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "userid",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "login_count",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/assignment5b",
+                          "methodName":  "completed",
+                          "line":  37,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson5b.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "name",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "auth_tan",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack8",
+                          "methodName":  "completed",
+                          "line":  41,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson8.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "name",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "auth_tan",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjection/attack9",
+                          "methodName":  "completed",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson9.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "SqlInjectionMitigations/serversSqlInjectionMitigations/servers",
+                          "methodName":  "unknown",
+                          "line":  25,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\Servers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "column",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "SqlInjectionMitigations/servers",
+                          "methodName":  "sort",
+                          "line":  47,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\Servers.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "field1",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "field2",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "field3",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionMitigations/attack10a",
+                          "methodName":  "completed",
+                          "line":  29,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlInjectionLesson10a.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "editor",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionMitigations/attack10b",
+                          "methodName":  "completed",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlInjectionLesson10b.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "ip",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlInjectionMitigations/attack12a",
+                          "methodName":  "completed",
+                          "line":  41,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlInjectionLesson13.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "userId",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlOnlyInputValidation/attack",
+                          "methodName":  "attack",
+                          "line":  29,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlOnlyInputValidation.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "userId",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SqlOnlyInputValidationOnKeywords/attack",
+                          "methodName":  "attack",
+                          "line":  33,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlOnlyInputValidationOnKeywords.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "url",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SSRF/task1",
+                          "methodName":  "completed",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\ssrf\\SSRFTask1.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "url",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/SSRF/task2",
+                          "methodName":  "completed",
+                          "line":  27,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\ssrf\\SSRFTask2.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "payload",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/VulnerableComponents/attack1",
+                          "methodName":  "unknown",
+                          "line":  24,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\vulnerablecomponents\\VulnerableComponentsLesson.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/WebWolf/landing",
+                          "methodName":  "click",
+                          "line":  33,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\webwolfintroduction\\LandingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/WebWolf/landing/password-reset",
+                          "methodName":  "openPasswordReset",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\webwolfintroduction\\LandingAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "email",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/WebWolf/mail/send",
+                          "methodName":  "sendEmail",
+                          "line":  39,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\webwolfintroduction\\MailAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "uniqueCode",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/WebWolf/mail",
+                          "methodName":  "completed",
+                          "line":  71,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\webwolfintroduction\\MailAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "checkboxValue",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/attack1",
+                          "methodName":  "completed",
+                          "line":  20,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingLesson1.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "QTY1",
+                                             "type":  "Integer"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "QTY2",
+                                             "type":  "Integer"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "QTY3",
+                                             "type":  "Integer"
+                                         }
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/CrossSiteScripting/attack5a",
+                          "methodName":  "completed",
+                          "line":  42,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingLesson5a.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "DOMTestRoute",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/attack6a",
+                          "methodName":  "completed",
+                          "line":  34,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingLesson6a.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_0_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_1_solution",
+                                             "type":  "String[]"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "question_2_solution",
+                                             "type":  "String[]"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/quiz",
+                          "methodName":  "completed",
+                          "line":  27,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/CrossSiteScripting/quiz",
+                          "methodName":  "getResults",
+                          "line":  64,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingQuiz.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "param1",
+                                             "type":  "Integer"
+                                         },
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "param2",
+                                             "type":  "Integer"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/phone-home-xss",
+                          "methodName":  "completed",
+                          "line":  29,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\DOMCrossSiteScripting.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "successMessage",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/dom-follow-up",
+                          "methodName":  "completed",
+                          "line":  38,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\DOMCrossSiteScriptingVerifier.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "editor",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/attack3",
+                          "methodName":  "completed",
+                          "line":  30,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\mitigation\\CrossSiteScriptingLesson3.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "editor2",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScripting/attack4",
+                          "methodName":  "completed",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\mitigation\\CrossSiteScriptingLesson4.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "successMessage",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScriptingStored/stored-xss-follow-up",
+                          "methodName":  "completed",
+                          "line":  28,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\stored\\StoredCrossSiteScriptingVerifier.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  57,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\stored\\StoredXssComments.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "commentStr",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/CrossSiteScriptingStored/stored-xss",
+                          "methodName":  "createNewComment",
+                          "line":  73,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\stored\\StoredXssComments.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "commentStr",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "xxe/blind",
+                          "methodName":  "addComment",
+                          "line":  67,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\BlindSendFileAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "xxe/commentsxxe/comments",
+                          "methodName":  "unknown",
+                          "line":  22,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\CommentsEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "xxe/comments",
+                          "methodName":  "retrieveComments",
+                          "line":  28,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\CommentsEndpoint.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "commentStr",
+                                             "type":  "String"
+                                         },
+                                         {
+                                             "annotation":  "@RequestHeader",
+                                             "name":  "contentType",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "xxe/content-type",
+                          "methodName":  "createNewUser",
+                          "line":  45,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\ContentTypeAssignment.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "commentStr",
+                                             "type":  "String"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "xxe/simple",
+                          "methodName":  "createNewComment",
+                          "line":  48,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\SimpleXXE.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  77,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\SimpleXXE.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/",
+                          "methodName":  "unknown",
+                          "line":  56,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\FileServer.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestParam",
+                                             "name":  "multipartFile",
+                                             "type":  "MultipartFile"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/fileupload",
+                          "methodName":  "importFile",
+                          "line":  65,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\FileServer.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/files",
+                          "methodName":  "getFiles",
+                          "line":  86,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\FileServer.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/jwt",
+                          "methodName":  "jwt",
+                          "line":  20,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\jwt\\JWTController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "String",
+                                             "type":  "MultiValueMap\u003cString,"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "decode",
+                          "line":  25,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\jwt\\JWTController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "String",
+                                             "type":  "MultiValueMap\u003cString,"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/",
+                          "methodName":  "encode",
+                          "line":  35,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\jwt\\JWTController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/mail",
+                          "methodName":  "mail",
+                          "line":  26,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\mailbox\\MailboxController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+                                         {
+                                             "annotation":  "@RequestBody",
+                                             "name":  "email",
+                                             "type":  "Email"
+                                         }
+                                     ],
+                          "httpMethod":  "POST",
+                          "path":  "/mail",
+                          "methodName":  "sendEmail",
+                          "line":  40,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\mailbox\\MailboxController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "DELETE",
+                          "path":  "/mail",
+                          "methodName":  "deleteAllMail",
+                          "line":  46,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\mailbox\\MailboxController.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/landing/**/landing/**",
+                          "methodName":  "unknown",
+                          "line":  17,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\requests\\LandingPage.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/landing/**",
+                          "methodName":  "unknown",
+                          "line":  20,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\requests\\LandingPage.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "ALL",
+                          "path":  "/requests/requests",
+                          "methodName":  "unknown",
+                          "line":  31,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\requests\\Requests.java"
+                      },
+                      {
+                          "security":  "",
+                          "params":  [
+
+                                     ],
+                          "httpMethod":  "GET",
+                          "path":  "/requests",
+                          "methodName":  "get",
+                          "line":  45,
+                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\requests\\Requests.java"
+                      }
+                  ],
+    "project_dir":  "D:/code/WebGoat-2025.3",
+    "total_endpoints":  185
+}

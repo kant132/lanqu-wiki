@@ -1,0 +1,736 @@
+﻿{
+    "security_chains":  {
+                            "count":  4,
+                            "items":  [
+                                          {
+                                              "passwordEncoder":  "NoOpPasswordEncoder",
+                                              "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\WebSecurityConfig.java",
+                                              "class":  "WebSecurityConfig",
+                                              "csrfDisabled":  true
+                                          },
+                                          {
+                                              "passwordEncoder":  "NoOpPasswordEncoder",
+                                              "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\WebSecurityConfig.java",
+                                              "class":  "WebSecurityConfig",
+                                              "csrfDisabled":  true
+                                          },
+                                          {
+                                              "passwordEncoder":  "NoOpPasswordEncoder",
+                                              "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\WebSecurityConfig.java",
+                                              "class":  "WebSecurityConfig",
+                                              "csrfDisabled":  true
+                                          },
+                                          {
+                                              "passwordEncoder":  "NoOpPasswordEncoder",
+                                              "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\WebSecurityConfig.java",
+                                              "class":  "WebSecurityConfig",
+                                              "csrfDisabled":  true
+                                          }
+                                      ]
+                        },
+    "build":  {
+                  "framework":  "spring-boot-webmvc",
+                  "tool":  "maven",
+                  "java_version":  "23",
+                  "framework_version":  "3.4.3",
+                  "file":  "pom.xml"
+              },
+    "filters":  {
+                    "count":  0,
+                    "items":  [
+
+                              ]
+                },
+    "project_dir":  "D:/code/WebGoat-2025.3",
+    "config_files":  {
+                         "count":  2,
+                         "items":  [
+                                       "D:\\code\\WebGoat-2025.3\\src\\main\\resources\\application-webgoat.properties",
+                                       "D:\\code\\WebGoat-2025.3\\src\\main\\resources\\application-webwolf.properties"
+                                   ]
+                     },
+    "scan_time":  "2026-05-29T23:07:14Z",
+    "protocols":  [
+                      "OAUTH2-AC",
+                      "JWT-LIFECYCLE",
+                      "PWD-RESET",
+                      "MFA",
+                      "PAYMENT",
+                      "FILE-UPLOAD"
+                  ],
+    "controllers":  {
+                        "count":  127,
+                        "items":  [
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\assignments\\AttackResultMessageResponseBodyAdvice.java",
+                                          "class":  "AttackResultMessageResponseBodyAdvice",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\assignments\\LessonTrackerInterceptor.java",
+                                          "class":  "LessonTrackerInterceptor",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\controller\\StartLesson.java",
+                                          "class":  "StartLesson",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\controller\\Welcome.java",
+                                          "class":  "Welcome",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\HammerHead.java",
+                                          "class":  "HammerHead",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\report\\ReportCardController.java",
+                                          "class":  "ReportCardController",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\EnvironmentService.java",
+                                          "class":  "EnvironmentService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\HintService.java",
+                                          "class":  "HintService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LabelDebugService.java",
+                                          "class":  "LabelDebugService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LabelService.java",
+                                          "class":  "LabelService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LessonInfoService.java",
+                                          "class":  "LessonInfoService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LessonMenuService.java",
+                                          "class":  "LessonMenuService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\LessonProgressService.java",
+                                          "class":  "LessonProgressService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\RestartLessonService.java",
+                                          "class":  "RestartLessonService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\service\\SessionService.java",
+                                          "class":  "SessionService",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\users\\RegistrationController.java",
+                                          "class":  "RegistrationController",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\users\\Scoreboard.java",
+                                          "class":  "Scoreboard",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\WebWolfRedirect.java",
+                                          "class":  "WebWolfRedirect",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\authbypass\\VerifyAccount.java",
+                                          "class":  "VerifyAccount",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\bypassrestrictions\\BypassRestrictionsFieldRestrictions.java",
+                                          "class":  "BypassRestrictionsFieldRestrictions",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\bypassrestrictions\\BypassRestrictionsFrontendValidation.java",
+                                          "class":  "BypassRestrictionsFrontendValidation",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge1\\Assignment1.java",
+                                          "class":  "Assignment1",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge1\\ImageServlet.java",
+                                          "class":  "ImageServlet",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge5\\Assignment5.java",
+                                          "class":  "Assignment5",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge7\\Assignment7.java",
+                                          "class":  "Assignment7",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\challenge8\\Assignment8.java",
+                                          "class":  "Assignment8",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\challenges\\FlagController.java",
+                                          "class":  "FlagController",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\chromedevtools\\NetworkDummy.java",
+                                          "class":  "NetworkDummy",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\chromedevtools\\NetworkLesson.java",
+                                          "class":  "NetworkLesson",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cia\\CIAQuiz.java",
+                                          "class":  "CIAQuiz",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ClientSideFilteringAssignment.java",
+                                          "class":  "ClientSideFilteringAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ClientSideFilteringFreeAssignment.java",
+                                          "class":  "ClientSideFilteringFreeAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\Salaries.java",
+                                          "class":  "Salaries",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\clientsidefiltering\\ShopEndpoint.java",
+                                          "class":  "ShopEndpoint",
+                                          "classPath":  "/clientSideFiltering/challenge-store"
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\EncodingAssignment.java",
+                                          "class":  "EncodingAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\HashingAssignment.java",
+                                          "class":  "HashingAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\SecureDefaultsAssignment.java",
+                                          "class":  "SecureDefaultsAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\SigningAssignment.java",
+                                          "class":  "SigningAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\cryptography\\XOREncodingAssignment.java",
+                                          "class":  "XOREncodingAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFConfirmFlag1.java",
+                                          "class":  "CSRFConfirmFlag1",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFFeedback.java",
+                                          "class":  "CSRFFeedback",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFGetFlag.java",
+                                          "class":  "CSRFGetFlag",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\CSRFLogin.java",
+                                          "class":  "CSRFLogin",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\csrf\\ForgedReviews.java",
+                                          "class":  "ForgedReviews",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\deserialization\\InsecureDeserializationTask.java",
+                                          "class":  "InsecureDeserializationTask",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\hijacksession\\HijackSessionAssignment.java",
+                                          "class":  "HijackSessionAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\htmltampering\\HtmlTamperingTask.java",
+                                          "class":  "HtmlTamperingTask",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\httpbasics\\HttpBasicsLesson.java",
+                                          "class":  "HttpBasicsLesson",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\httpbasics\\HttpBasicsQuiz.java",
+                                          "class":  "HttpBasicsQuiz",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\httpproxies\\HttpBasicsInterceptRequest.java",
+                                          "class":  "HttpBasicsInterceptRequest",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORDiffAttributes.java",
+                                          "class":  "IDORDiffAttributes",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDOREditOtherProfile.java",
+                                          "class":  "IDOREditOtherProfile",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORLogin.java",
+                                          "class":  "IDORLogin",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORViewOtherProfile.java",
+                                          "class":  "IDORViewOtherProfile",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORViewOwnProfile.java",
+                                          "class":  "IDORViewOwnProfile",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\idor\\IDORViewOwnProfileAltUrl.java",
+                                          "class":  "IDORViewOwnProfileAltUrl",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\insecurelogin\\InsecureLoginTask.java",
+                                          "class":  "InsecureLoginTask",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderJKUEndpoint.java",
+                                          "class":  "JWTHeaderJKUEndpoint",
+                                          "classPath":  "/JWT/"
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\claimmisuse\\JWTHeaderKIDEndpoint.java",
+                                          "class":  "JWTHeaderKIDEndpoint",
+                                          "classPath":  "/JWT/"
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTDecodeEndpoint.java",
+                                          "class":  "JWTDecodeEndpoint",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTQuiz.java",
+                                          "class":  "JWTQuiz",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTRefreshEndpoint.java",
+                                          "class":  "JWTRefreshEndpoint",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTSecretKeyEndpoint.java",
+                                          "class":  "JWTSecretKeyEndpoint",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\jwt\\JWTVotesEndpoint.java",
+                                          "class":  "JWTVotesEndpoint",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\lessontemplate\\SampleAttack.java",
+                                          "class":  "SampleAttack",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\logging\\LogBleedingTask.java",
+                                          "class":  "LogBleedingTask",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\logging\\LogSpoofingTask.java",
+                                          "class":  "LogSpoofingTask",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACHiddenMenus.java",
+                                          "class":  "MissingFunctionACHiddenMenus",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACUsers.java",
+                                          "class":  "MissingFunctionACUsers",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACYourHash.java",
+                                          "class":  "MissingFunctionACYourHash",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\missingac\\MissingFunctionACYourHashAdmin.java",
+                                          "class":  "MissingFunctionACYourHashAdmin",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\QuestionsAssignment.java",
+                                          "class":  "QuestionsAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\ResetLinkAssignment.java",
+                                          "class":  "ResetLinkAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\ResetLinkAssignmentForgotPassword.java",
+                                          "class":  "ResetLinkAssignmentForgotPassword",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\SecurityQuestionAssignment.java",
+                                          "class":  "SecurityQuestionAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\passwordreset\\SimpleMailAssignment.java",
+                                          "class":  "SimpleMailAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUpload.java",
+                                          "class":  "ProfileUpload",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadFix.java",
+                                          "class":  "ProfileUploadFix",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadRemoveUserInput.java",
+                                          "class":  "ProfileUploadRemoveUserInput",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileUploadRetrieval.java",
+                                          "class":  "ProfileUploadRetrieval",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\pathtraversal\\ProfileZipSlip.java",
+                                          "class":  "ProfileZipSlip",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\securepasswords\\SecurePasswordsAssignment.java",
+                                          "class":  "SecurePasswordsAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\spoofcookie\\SpoofCookieAssignment.java",
+                                          "class":  "SpoofCookieAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionChallenge.java",
+                                          "class":  "SqlInjectionChallenge",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionChallengeLogin.java",
+                                          "class":  "SqlInjectionChallengeLogin",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionLesson6a.java",
+                                          "class":  "SqlInjectionLesson6a",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionLesson6b.java",
+                                          "class":  "SqlInjectionLesson6b",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\advanced\\SqlInjectionQuiz.java",
+                                          "class":  "SqlInjectionQuiz",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson10.java",
+                                          "class":  "SqlInjectionLesson10",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson2.java",
+                                          "class":  "SqlInjectionLesson2",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson3.java",
+                                          "class":  "SqlInjectionLesson3",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson4.java",
+                                          "class":  "SqlInjectionLesson4",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson5.java",
+                                          "class":  "SqlInjectionLesson5",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson5a.java",
+                                          "class":  "SqlInjectionLesson5a",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson5b.java",
+                                          "class":  "SqlInjectionLesson5b",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson8.java",
+                                          "class":  "SqlInjectionLesson8",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\introduction\\SqlInjectionLesson9.java",
+                                          "class":  "SqlInjectionLesson9",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\Servers.java",
+                                          "class":  "Servers",
+                                          "classPath":  "SqlInjectionMitigations/servers"
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlInjectionLesson10a.java",
+                                          "class":  "SqlInjectionLesson10a",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlInjectionLesson10b.java",
+                                          "class":  "SqlInjectionLesson10b",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlInjectionLesson13.java",
+                                          "class":  "SqlInjectionLesson13",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlOnlyInputValidation.java",
+                                          "class":  "SqlOnlyInputValidation",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\sqlinjection\\mitigation\\SqlOnlyInputValidationOnKeywords.java",
+                                          "class":  "SqlOnlyInputValidationOnKeywords",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\ssrf\\SSRFTask1.java",
+                                          "class":  "SSRFTask1",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\ssrf\\SSRFTask2.java",
+                                          "class":  "SSRFTask2",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\vulnerablecomponents\\VulnerableComponentsLesson.java",
+                                          "class":  "VulnerableComponentsLesson",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\webwolfintroduction\\LandingAssignment.java",
+                                          "class":  "LandingAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\webwolfintroduction\\MailAssignment.java",
+                                          "class":  "MailAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingLesson1.java",
+                                          "class":  "CrossSiteScriptingLesson1",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingLesson5a.java",
+                                          "class":  "CrossSiteScriptingLesson5a",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingLesson6a.java",
+                                          "class":  "CrossSiteScriptingLesson6a",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\CrossSiteScriptingQuiz.java",
+                                          "class":  "CrossSiteScriptingQuiz",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\DOMCrossSiteScripting.java",
+                                          "class":  "DOMCrossSiteScripting",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\DOMCrossSiteScriptingVerifier.java",
+                                          "class":  "DOMCrossSiteScriptingVerifier",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\mitigation\\CrossSiteScriptingLesson3.java",
+                                          "class":  "CrossSiteScriptingLesson3",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\mitigation\\CrossSiteScriptingLesson4.java",
+                                          "class":  "CrossSiteScriptingLesson4",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\stored\\StoredCrossSiteScriptingVerifier.java",
+                                          "class":  "StoredCrossSiteScriptingVerifier",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xss\\stored\\StoredXssComments.java",
+                                          "class":  "StoredXssComments",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\BlindSendFileAssignment.java",
+                                          "class":  "BlindSendFileAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\CommentsEndpoint.java",
+                                          "class":  "CommentsEndpoint",
+                                          "classPath":  "xxe/comments"
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\ContentTypeAssignment.java",
+                                          "class":  "ContentTypeAssignment",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\lessons\\xxe\\SimpleXXE.java",
+                                          "class":  "SimpleXXE",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\FileServer.java",
+                                          "class":  "FileServer",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\jwt\\JWTController.java",
+                                          "class":  "JWTController",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\mailbox\\MailboxController.java",
+                                          "class":  "MailboxController",
+                                          "classPath":  ""
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\requests\\LandingPage.java",
+                                          "class":  "LandingPage",
+                                          "classPath":  "/landing/**"
+                                      },
+                                      {
+                                          "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\requests\\Requests.java",
+                                          "class":  "Requests",
+                                          "classPath":  "/requests"
+                                      }
+                                  ]
+                    },
+    "interceptors":  {
+                         "count":  4,
+                         "items":  [
+                                       {
+                                           "class":  "MvcConfiguration",
+                                           "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\MvcConfiguration.java"
+                                       },
+                                       {
+                                           "class":  "UserInterceptor",
+                                           "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\UserInterceptor.java"
+                                       },
+                                       {
+                                           "class":  "UserInterceptor",
+                                           "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\container\\UserInterceptor.java"
+                                       },
+                                       {
+                                           "class":  "MvcConfiguration",
+                                           "file":  "D:\\code\\WebGoat-2025.3\\src\\main\\java\\org\\owasp\\webgoat\\webwolf\\MvcConfiguration.java"
+                                       }
+                                   ]
+                     },
+    "dependencies":  [
+                         {
+                             "version":  "${xstream.version}",
+                             "name":  "xstream"
+                         },
+                         {
+                             "version":  "0.22.1",
+                             "name":  "jjwt"
+                         },
+                         {
+                             "version":  "${bootstrap.version}",
+                             "name":  "jose4j"
+                         }
+                     ]
+}

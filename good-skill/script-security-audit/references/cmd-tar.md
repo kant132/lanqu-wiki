@@ -67,7 +67,28 @@ tar xf "$USER_ARCHIVE" -C /opt/app/ && /opt/app/setup.sh
 # 归档中 setup.sh 由攻击者控制
 
 # 管道解压后执行
-curl "$URL" | tar xz | bash setup.sh
+curl "$URL" | tar xz && bash setup.sh
+```
+
+### 命令注入 — 通配符展开写入恶意文件名
+
+当 tar 命令的 target 含通配符 `*` 且目录可写时，攻击者可在目录中创建特殊文件名，被 shell 展开后作为 tar 的选项解析：
+
+```bash
+# 脚本中常见的危险写法
+tar cvf backup.tar /data/uploads/*
+
+# 攻击者在 /data/uploads/ 目录下创建以下文件：
+# 文件名: --checkpoint=1
+# 文件名: --checkpoint-action=exec=sh /tmp/evil.sh
+# 文件名: evil.sh (内容为恶意命令)
+
+# tar 展开 * 后实际执行：
+# tar cvf backup.tar /data/uploads/--checkpoint=1 /data/uploads/--checkpoint-action=exec=sh\ /tmp/evil.sh ...
+# --checkpoint-action 中的命令被执行
+
+# 也可以直接在文件名中写入命令（无需引号）：
+# 文件名: --checkpoint-action=exec=rm *
 ```
 
 ## 安全选项

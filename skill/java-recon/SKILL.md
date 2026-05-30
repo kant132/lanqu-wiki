@@ -10,6 +10,10 @@ tools:
 
 # Phase 1: 项目分析初始化与组件拓扑识别
 
+## 输出语言规则
+
+所有报告内容必须使用中文输出。标题、描述、分析文字、表头、结论均使用中文。以下内容保持英文：代码片段、文件路径、类名、方法名、技术状态码（PASS/FAIL/N/A）。
+
 ## 输入
 
 - 项目根路径
@@ -29,6 +33,7 @@ tools:
 | C5  | 版本号精准感知 | 识别核心框架版本，为后续特定版本行为提供判定基准                                                         |
 | C6  | 配置文件深度分析 | 解析 application.yml/properties 等配置文件，提取安全相关配置项，标注风险等级                                    |
 | C7  | 启动时安全配置提取 | 扫描 @Configuration @Bean、@PostConstruct、ApplicationRunner 等启动时安全初始化逻辑，建立安全 Bean 资产清单        |
+| C8  | 业务协议资产识别 | 扫描项目使用的业务安全协议（OAuth2/SAML/支付/密码重置/MFA/JWT/Session/TLS/密码算法等），建立协议资产清单，为后续协议级审计提供输入。协议审计清单详见 java-api-audit/references/protocols/ 目录 |
 
 ## 执行流程
 
@@ -190,6 +195,93 @@ tools:
 - 每个 Bean 记录：Bean 名称、类型、所在类:行号、安全相关性
 - 标注 Bean 的安全影响等级（HIGH/MEDIUM/LOW）
 - 交叉验证：Bean 定义是否与 application.yml 配置一致
+```
+
+### Step 8: 业务协议资产识别（C8）
+
+```
+扫描项目使用的业务安全协议，建立协议资产清单。
+这是后续"协议级审计"的基础——不理解业务协议，就无法发现协议实现中的安全缺陷。
+
+扫描目标（按协议类型）：
+
+1. OAuth2/OIDC 协议:
+   - 依赖: spring-boot-starter-oauth2-client, spring-boot-starter-oauth2-resource-server, nimbus-jose-jwt
+   - 注解: @EnableOAuth2Client, @EnableOAuth2Sso, @EnableResourceServer
+   - 配置: spring.security.oauth2.client.*, spring.security.oauth2.resourceserver.*
+   - 类: OAuth2AuthorizedClient, JwtDecoder, OidcUserService
+   - 端点: /oauth2/authorization/*, /login/oauth2/code/*
+
+2. SAML 协议:
+   - 依赖: spring-security-saml2-service-provider, opensaml
+   - 类: SAMLAuthenticationProvider, RelyingPartyRegistration
+   - 端点: /saml2/authenticate/*, /login/saml2/*
+
+3. 密码重置流程:
+   - 方法名: resetPassword, forgotPassword, sendResetLink, changePassword
+   - 端点路径: /reset*, /forgot*, /password-reset*
+   - 参数: resetToken, resetLink, email, newPassword
+
+4. 多因素认证(MFA):
+   - 关键词: twoFactor, mfa, otp, totp, authenticator, smsCode
+   - 依赖: commons-codec (TOTP), google-authenticator
+
+5. 支付/交易流程:
+   - 关键词: payment, charge, transfer, transaction, order, checkout, amount
+   - 端点: /pay, /checkout, /transfer, /order/create
+
+6. JWT 令牌管理:
+   - 依赖: jjwt, java-jwt, jose4j, nimbus-jose-jwt
+   - 类: Jwt, JwtDecoder, JwtEncoder
+   - 配置: jwt.secret, jwt.expiration
+
+7. WebSocket 通信:
+   - 注解: @ServerEndpoint, @MessageMapping, @EnableWebSocketMessageBroker
+   - 类: WebSocketHandler, StompEndpointConfigurer
+
+8. GraphQL API:
+   - 依赖: graphql-java, graphql-spring-boot, dgs-framework
+   - 注解: @QueryMapping, @MutationMapping, @DgsQuery
+   - 端点: /graphql, /graphiql
+
+9. 文件上传/下载:
+   - 类: MultipartFile, Part
+   - 端点: /upload, /download, /file, /attachment
+
+10. 会话管理:
+    - 配置: server.servlet.session.*, spring.session.*
+    - 类: HttpSession, SessionRegistry
+
+11. 密码算法与密钥管理:
+    - 类: MessageDigest, Cipher, SecretKeyFactory, KeyGenerator, Signature
+    - 配置: *.secret, *.key, *.password 在 application.yml 中
+    - 依赖: bouncy-castle, jose4j, nimbus-jose-jwt
+
+12. TLS/SSL 配置:
+    - 配置: server.ssl.*, server.http2.*
+    - 类: SSLContext, SSLSocketFactory, TrustManager, X509TrustManager
+    - 依赖: netty (WebFlux), undertow
+
+13. 网络端口与 Socket:
+    - 配置: server.port, management.server.port, server.address
+    - 类: ServerSocket, Socket, SocketChannel, @ServerEndpoint
+    - 依赖: netty, undertow, tomcat
+
+14. API 网关与限流:
+    - 依赖: spring-cloud-gateway, zuul, bucket4j, resilience4j
+    - 注解: @RateLimiter, @Throttle
+    - 配置: spring.cloud.gateway.*
+
+输出要求：
+- 每个识别到的协议记录：协议ID、协议名称、识别依据（依赖/注解/配置/类/端点）、实现位置（文件:行号）
+- 标注协议的安全关键度（CRITICAL/HIGH/MEDIUM）
+- 输出格式：
+
+| 协议ID | 协议名称 | 识别依据 | 实现位置 | 安全关键度 |
+|--------|----------|----------|----------|-----------|
+| OAUTH2-AC | OAuth2 授权码流程 | spring-boot-starter-oauth2-client + @EnableOAuth2Client | WebSecurityConfig.java:45 | CRITICAL |
+| JWT-LIFECYCLE | JWT 令牌生命周期 | jjwt 0.9.1 + JwtDecoder | JwtConfig.java:12 | CRITICAL |
+| PWD-RESET | 密码重置流程 | resetPassword() + /password-reset 端点 | UserController.java:78 | HIGH |
 ```
 
 ## 强制输出模板

@@ -20,6 +20,7 @@ tools:
 5. **业务安全绑定**：每个漏洞必须关联业务场景，不得脱离上下文报告技术发现
 6. **输出纯净**：phase4-api-audit.md 只含审计详情，最终报告只含汇总统计，不得互相重复
 7. **输出统一**：所有输出为 Markdown 文件，存放在 `output/` 目录
+7.1. **输出语言**：所有报告内容必须使用中文输出。标题、描述、分析文字、表头、结论均使用中文。以下内容保持英文：代码片段、文件路径、类名、方法名、curl 命令、SQL payload、技术状态码（PASS/FAIL/N/A、REACHABLE/UNREACHABLE、DETERMINISTIC/HEURISTIC/SUBJECTIVE、CONFIRMED/LIKELY/POSSIBLE）
 8. **全路径+行号**：每个审计步骤必须输出类的全限定名和行号，每一步函数调用必须有说明，关键点必须标注
 9. **参数消毒分析**：对每个可控参数，必须分析从 Source 到 Sink 路径上是否存在消毒/净化操作，消毒是否可绕过
 10. **配置文件关联**：必须结合 phase1-recon.md 中的 Config_Analysis，分析配置文件对 API 行为的影响
@@ -30,6 +31,7 @@ tools:
 15. **上下文敏感消毒**：消毒有效性必须结合 Sink 类型评估，禁止脱离 Sink 上下文判断消毒是否有效（详见 references/taint-semantics.md）
 16. **跨请求追踪**：对存储型漏洞（Stored XSS、二阶注入、Session 污染），必须追踪数据在 DB/Session/缓存中的跨请求流向（详见 references/cross-request-tracking.md）
 17. **可执行测试资产**：PoC 必须为可执行的 curl 命令格式，包含认证步骤、完整 URL、预期响应特征；必须为每个漏洞类型生成针对性 Fuzzing 字典
+18. **业务协议感知**：必须识别项目使用的业务安全协议（OAuth2/SAML/支付/密码重置/MFA/JWT/Session 等），对每个协议加载对应的安全审计清单，逐项验证实现是否偏离安全规范。禁止仅做配置检查而不理解协议流程（详见 references/business-protocols.md）
 
 ## 输入
 
@@ -374,7 +376,68 @@ Sink 路径输出格式（强制）:
 输出: 业务逻辑风险清单（详见 references/business-logic-audit.md 第 2 节格式）
 ```
 
-### 检查点 11：生成审计报告
+### 检查点 11：业务协议级审计
+
+```
+确定性: 混合（配置检查 DETERMINISTIC，逻辑验证 HEURISTIC，合理性评估 SUBJECTIVE）
+
+核心思想:
+  传统 Source→Sink 污点追踪只能发现技术漏洞（SQLi/XSS/XXE）。
+  业务协议漏洞需要理解协议的完整流程，逐步验证实现是否偏离安全规范。
+  例如: OAuth2 不是"看到 @EnableOAuth2Client 就检查配置"，而是需要理解
+  授权码流程的每一步（redirect_uri → state → code → token），逐步验证安全性。
+
+输入: output/phase1-recon.md 中的协议资产清单（C8 断言输出）
+参考: references/business-protocols.md（协议安全审计清单库）
+
+执行流程:
+
+1. 加载协议清单:
+   从 phase1-recon.md 提取所有识别到的业务协议
+
+2. 对每个协议，加载对应的安全审计清单:
+   从 references/protocols/ 目录获取该协议的安全审计清单文件
+
+3. 逐项审计:
+   对清单中的每个检查项，在代码中验证是否实现:
+   - 搜索相关代码（配置、类、方法）
+   - 读取实现逻辑
+   - 判断是否符合安全规范
+   - 记录 PASS/FAIL + 证据（文件:行号）+ 说明
+
+4. 攻击向量评估:
+   对每个协议，评估已知攻击向量的可利用性:
+   - 前提条件是否满足
+   - 是否有补偿控制
+   - 构造 PoC 思路
+
+5. 输出格式:
+
+   ### 协议审计: {协议名称} ({协议ID})
+
+   **识别依据**: {在代码中发现的识别特征}
+   **实现位置**: {相关类/配置文件列表}
+
+   #### 审计结果
+
+   | 检查项 | 审计内容 | 状态 | 证据 | 严重度 | 确定性 | 说明 |
+   |--------|----------|------|------|--------|--------|------|
+   | OAC-01 | redirect_uri 校验 | FAIL | OAuthConfig.java:45 | CRITICAL | DETERMINISTIC | redirect_uri 使用通配符匹配 |
+
+   #### 攻击向量评估
+
+   | 攻击向量 | 可利用性 | 前提条件 | PoC 思路 |
+   |----------|----------|----------|----------|
+   | 授权码拦截 | 可利用 | redirect_uri 校验不严 + 无 PKCE | 构造恶意 redirect_uri |
+
+强制要求:
+  - 每个识别到的协议必须执行完整的清单审计，不得跳过任何检查项
+  - 每个 FAIL 检查项必须输出证据（文件:行号）和说明
+  - 必须评估每个已知攻击向量的可利用性
+  - 协议审计结果独立成章节，写入 phase4-api-audit.md
+```
+
+### 检查点 12：生成审计报告
 
 ```
 确定性: DETERMINISTIC（报告生成为结构化输出）
@@ -440,30 +503,40 @@ Sink 路径输出格式（强制）:
   4. 跨请求污点链路汇总（来自检查点 9）:
      | # | 漏洞类型 | 写入端点 | 存储介质 | 读取端点 | Sink | 置信度 | PoC |
 
-  5. 业务逻辑风险清单（来自检查点 10）:
-     | # | 漏洞类型 | 端点 | 代码证据 | 置信度 | 严重度 | PoC 思路 |
+   5. 业务逻辑风险清单（来自检查点 10）:
+      | # | 漏洞类型 | 端点 | 代码证据 | 置信度 | 严重度 | PoC 思路 |
 
-  6. 框架防护覆盖汇总:
-     | 端点 | Filter 覆盖 | SecurityFilterChain | Interceptor 覆盖 | 综合防护等级 | 关键缺陷 |
+   6. 业务协议审计结果（来自检查点 11）:
+      对每个识别到的协议输出:
+      ### 协议审计: {协议名称} ({协议ID})
+      **识别依据**: ...
+      **实现位置**: ...
+      #### 审计结果
+      | 检查项 | 审计内容 | 状态 | 证据 | 严重度 | 确定性 | 说明 |
+      #### 攻击向量评估
+      | 攻击向量 | 可利用性 | 前提条件 | PoC 思路 |
 
-  7. 配置文件风险关联表
+   7. 框架防护覆盖汇总:
+      | 端点 | Filter 覆盖 | SecurityFilterChain | Interceptor 覆盖 | 综合防护等级 | 关键缺陷 |
 
-  8. 启动时安全配置关联表
+   8. 配置文件风险关联表
 
-  9. Fuzzing 字典（按漏洞类型）:
-     | 漏洞类型 | 目标参数 | Fuzzing Payload 示例 | 预期触发条件 |
-     |----------|----------|---------------------|-------------|
-     | SQL注入 | name | ' OR 1=1 -- | 响应包含额外数据 |
-     | SQL注入 | name | ' UNION SELECT null,null -- | 响应列数匹配 |
-     | XSS | content | <script>alert(1)</script> | 响应体包含未转义标签 |
-     | 路径穿越 | fullName | ../../etc/passwd | 响应包含 passwd 内容 |
-     | SSRF | url | http://127.0.0.1:8080/actuator/env | 响应包含 actuator 数据 |
+   9. 启动时安全配置关联表
 
-  10. 漏洞汇总清单（一行一条）:
-      # | 类型 | 严重度 | 端点 | 置信度 | 完整 Sink 路径 | PoC 摘要
+   10. Fuzzing 字典（按漏洞类型）:
+      | 漏洞类型 | 目标参数 | Fuzzing Payload 示例 | 预期触发条件 |
+      |----------|----------|---------------------|-------------|
+      | SQL注入 | name | ' OR 1=1 -- | 响应包含额外数据 |
+      | SQL注入 | name | ' UNION SELECT null,null -- | 响应列数匹配 |
+      | XSS | content | <script>alert(1)</script> | 响应体包含未转义标签 |
+      | 路径穿越 | fullName | ../../etc/passwd | 响应包含 passwd 内容 |
+      | SSRF | url | http://127.0.0.1:8080/actuator/env | 响应包含 actuator 数据 |
 
-  11. 业务安全评估表
-  12. 修复建议
+   11. 漏洞汇总清单（一行一条）:
+       # | 类型 | 严重度 | 端点 | 置信度 | 完整 Sink 路径 | PoC 摘要
+
+   12. 业务安全评估表
+   13. 修复建议
 
 禁止:
   - 不得遗漏审计队列中的任何 P0 或 P1 端点
@@ -478,6 +551,7 @@ Sink 路径输出格式（强制）:
   - PoC 不得为 payload 片段，必须为可执行 curl 命令
   - 不得省略"验证标准"
   - 不得省略 Fuzzing 字典
+  - 不得跳过任何已识别协议的审计清单
 ```
 
 ## 输出格式强制要求
@@ -546,6 +620,9 @@ Sink 路径输出格式（强制）:
 | 不做威胁建模直接审计 | 必须先执行 STRIDE 威胁建模，生成攻击树指导审计优先级 |
 | 不生成 Fuzzing 字典 | 必须按漏洞类型生成针对性 Fuzzing payload 字典 |
 | 不写验证标准 | 每个 PoC 必须说明如何确认漏洞被成功触发 |
+| 不理解业务协议直接审计 | 必须先识别项目使用的业务协议（OAuth2/SAML/支付等），加载协议安全清单逐项审计 |
+| 协议审计只做配置检查 | 必须理解协议完整流程（如 OAuth2 的 redirect→state→code→token），逐步验证每个环节的安全性 |
+| 跳过协议攻击向量评估 | 每个协议必须评估已知攻击向量的可利用性（如 OAuth2 的授权码拦截、CSRF、开放重定向） |
 
 ## 参考
 
@@ -554,4 +631,15 @@ Sink 路径输出格式（强制）:
 - 跨请求污点追踪方法论详见 `references/cross-request-tracking.md`
 - STRIDE 威胁建模方法论详见 `references/threat-modeling.md`
 - 业务逻辑漏洞审计方法论详见 `references/business-logic-audit.md`
+- **业务协议安全审计清单库**详见 `references/protocols/` 目录:
+  - `protocols/README.md` — 协议索引与路由表
+  - `protocols/oauth2.md` — OAuth2/OIDC 协议（OAUTH2-AC/IM/PKCE/CC/RT + OIDC）
+  - `protocols/authentication.md` — 认证流程（密码重置/邮箱验证/MFA）
+  - `protocols/payment.md` — 支付/交易流程
+  - `protocols/data-handling.md` — 数据处理（文件上传/GraphQL/WebSocket）
+  - `protocols/jwt.md` — JWT 令牌生命周期
+  - `protocols/infrastructure-crypto.md` — 密码算法与密钥管理
+  - `protocols/infrastructure-network.md` — 网络与传输安全（TLS/SSL/端口/Socket/HTTP）
+  - `protocols/infrastructure-session.md` — 会话管理（Session/Cookie/分布式Session）
+  - `protocols/infrastructure-api.md` — API 基础设施（网关/限流/CORS）
 - 审计分支文件详见 `references/branch-*.md`

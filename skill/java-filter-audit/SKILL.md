@@ -10,6 +10,10 @@ tools:
 
 # Phase 2: Filter 与安全配置审计阶段
 
+## 输出语言规则
+
+所有报告内容必须使用中文输出。标题、描述、分析文字、表头、结论均使用中文。以下内容保持英文：代码片段、文件路径、类名、方法名、技术状态码（PASS/FAIL/N/A、REACHABLE/UNREACHABLE）。
+
 ## 输入
 
 - Asset-Inventory JSON（来自 Phase 1 的 filters + security_configs 列表）
@@ -145,6 +149,31 @@ for each security_config in inventory.security_configs:
   - AuthenticationEntryPoint 是否泄露敏感信息
 ```
 
+### Step 5.5: 第四层 — SecurityFilterChain 配置安全语义深度审计（SC-DEEP）
+
+```
+核心思想:
+  SC1-SC10 只检查配置项的值（如 csrf.disable()），但不分析配置对具体端点的安全影响。
+  SC-DEEP 要求将每个配置决策追溯到其对所有受影响端点的实际安全影响。
+
+加载深度审计清单: references/filter-config-deep.md
+
+必须执行的深度检查:
+  SC-DEEP-01: CSRF 禁用影响分析 — 枚举所有无 CSRF 防护的状态变更端点
+  SC-DEEP-02: permitAll 路径深度分析 — 交叉匹配实际 API 端点，评估每个端点的敏感性
+  SC-DEEP-03: 密码编码器链路分析 — 追踪密码从输入到存储的完整链路
+  SC-DEEP-04: CORS 配置实际影响分析 — 哪些端点受 CORS 影响，是否携带认证
+  SC-DEEP-05: 会话管理配置完整性分析 — 会话生命周期各阶段的安全检查
+  SC-DEEP-06: 多 SecurityFilterChain 交互分析 — 路径重叠/遗漏检查
+  SC-DEEP-07: OAuth2 配置安全语义分析 — 理解 OAuth2 流程每步的安全含义
+  SC-DEEP-08: 错误处理信息泄露分析 — 认证/授权/异常错误消息是否泄露敏感信息
+
+强制要求:
+  - 每个 DEEP 检查项必须输出受影响的端点清单（不是仅输出配置值）
+  - 每个 FAIL 必须关联到具体的端点和业务影响
+  - 不得仅输出"csrf.disable()"就结束，必须分析禁用后哪些端点暴露于 CSRF 攻击
+```
+
 ### Step 6: LSP 交叉引用（P2）
 
 对 P1 发现的 URI 变量，使用 LSP `findReferences` 追踪其传递路径。
@@ -190,6 +219,7 @@ for each security_config in inventory.security_configs:
 ## 强制输出模板
 
 > 详细输出模板见 [`references/phase2-filter-output.md`](references/phase2-filter-output.md)
+> 配置深度审计清单见 [`references/filter-config-deep.md`](references/filter-config-deep.md)
 
 ## 输出示例
 

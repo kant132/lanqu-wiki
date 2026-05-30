@@ -10,6 +10,10 @@ tools:
 
 # Phase 3: 拦截器核心审计及静态资源专项审计
 
+## 输出语言规则
+
+所有报告内容必须使用中文输出。标题、描述、分析文字、表头、结论均使用中文。以下内容保持英文：代码片段、文件路径、类名、方法名、技术状态码（PASS/FAIL/N/A、REACHABLE/UNREACHABLE）。
+
 ## 输入
 
 - Asset-Inventory JSON（来自 Phase 1 的 interceptors 列表）
@@ -90,6 +94,46 @@ for each pattern:
     test directory traversal
 ```
 
+### Step 4.5: Interceptor 配置安全语义深度审计（IC-DEEP）
+
+```
+核心思想:
+  I1-I7 和 S1-S4 只检查 Interceptor 的代码模式和路径配置，但不分析配置对具体端点的安全影响。
+  IC-DEEP 要求将每个配置决策追溯到其对所有受影响端点的实际安全影响。
+
+加载深度审计清单: references/interceptor-config-deep.md
+
+必须执行的深度检查:
+  IC-DEEP-01: preHandle 鉴权逻辑深度分析
+    - preHandle 中是否有认证/授权检查？
+    - 认证检查是否可被绕过（特定 Header/IP/User-Agent 跳过）？
+    - 认证失败时的行为（返回 false vs 抛异常 vs 设置响应码）
+
+  IC-DEEP-02: 路径匹配深度分析
+    - 路径匹配方式: AntPathMatcher vs PathPatternParser
+    - 拦截器路径与实际 Controller 路由的一致性
+    - 排除路径中是否包含状态变更操作
+
+  IC-DEEP-03: 拦截器链执行顺序分析
+    - 多个 Interceptor 的执行顺序是否合理
+    - 认证 Interceptor 是否在授权 Interceptor 之前
+    - 前一个 Interceptor 短路时后续 Interceptor 是否被跳过
+
+  IC-DEEP-04: afterCompletion/postHandle 信息泄露分析
+    - 是否将敏感数据写入响应头/日志
+    - 是否在日志中记录敏感参数（如密码）
+
+  IC-DEEP-05: 与 Filter/SecurityFilterChain 的交互分析
+    - Filter 层已做的安全检查，Interceptor 是否重复或遗漏
+    - Filter 层的认证结果是否传递到 Interceptor
+    - 安全检查的覆盖空白（Filter 和 Interceptor 都未覆盖的端点）
+
+强制要求:
+  - 每个 DEEP 检查项必须输出受影响的端点清单
+  - 每个 FAIL 必须关联到具体的端点和业务影响
+  - 不得仅输出"preHandle 返回 true"就结束，必须分析哪些端点因此缺少鉴权
+```
+
 ### Step 5: 漏洞可达性评估
 
 ```
@@ -130,6 +174,7 @@ for each pattern:
 ## 强制输出模板
 
 > 详细输出模板见 [`references/phase3-interceptor-output.md`](references/phase3-interceptor-output.md)
+> 配置深度审计清单见 [`references/interceptor-config-deep.md`](references/interceptor-config-deep.md)
 
 ## 输出示例
 
